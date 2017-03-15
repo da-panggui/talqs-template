@@ -1,4 +1,4 @@
-webpackJsonp([5,10],{
+webpackJsonp([3,10],{
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -704,7 +704,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * 1: 大题显示（如果是复合题则拼装子题的解析显示）
          * 2: 子题显示（只显示子题的解析，只对复合题生效）
          */
-        analyzeVersion: 2,
+        analyzeVersion: 0,
 
         /**
          * 是否隐藏试题来源
@@ -1151,7 +1151,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 }
 
                 if (tempIndex < 0 && !item.remove) {
-                    tempIndex = item.index !== undefined ? item.index : templates.length;
+                    tempIndex = item.index !== undefined && item.index < templates.length ? item.index : templates.length;
                     templates.splice(tempIndex, 0, tempComponent);
                 }
             }
@@ -1164,7 +1164,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 9:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1192,11 +1192,7 @@ var info = document.getElementById('info');
 // 渲染试题
 var renderIndex = function renderIndex() {
   var currentData = data[currentIndex];
-  app.innerHTML = _talqsTemplate2.default.render(currentData, {
-    queIndex: currentIndex + 1,
-    hideSource: true,
-    hideDifficulty: true
-  });
+  app.innerHTML = _talqsTemplate2.default.render(currentData, { queIndex: currentIndex + 1 });
   info.innerHTML = '\u903B\u8F91\u7C7B\u578B\uFF1A ' + currentData.logicQuesTypeName + '\uFF0C\u903B\u8F91\u7C7B\u578BID\uFF1A ' + currentData.logicQuesTypeId;
 };
 
@@ -1218,4 +1214,4 @@ changeQSBtn.addEventListener('click', function () {
 
 /***/ })
 
-},[9]);
+},[11]);

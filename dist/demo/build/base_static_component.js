@@ -1,6 +1,5 @@
-webpackJsonp([6,10],{
-
-/***/ 0:
+webpackJsonp([2,10],[
+/* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -704,7 +703,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * 1: 大题显示（如果是复合题则拼装子题的解析显示）
          * 2: 子题显示（只显示子题的解析，只对复合题生效）
          */
-        analyzeVersion: 2,
+        analyzeVersion: 0,
 
         /**
          * 是否隐藏试题来源
@@ -1151,7 +1150,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 }
 
                 if (tempIndex < 0 && !item.remove) {
-                    tempIndex = item.index !== undefined ? item.index : templates.length;
+                    tempIndex = item.index !== undefined && item.index < templates.length ? item.index : templates.length;
                     templates.splice(tempIndex, 0, tempComponent);
                 }
             }
@@ -1163,8 +1162,95 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ 7:
+"use strict";
+/*!
+ * escape-html
+ * Copyright(c) 2012-2013 TJ Holowaychuk
+ * Copyright(c) 2015 Andreas Lubbe
+ * Copyright(c) 2015 Tiancheng "Timothy" Gu
+ * MIT Licensed
+ */
+
+
+
+/**
+ * Module variables.
+ * @private
+ */
+
+var matchHtmlRegExp = /["'&<>]/;
+
+/**
+ * Module exports.
+ * @public
+ */
+
+module.exports = escapeHtml;
+
+/**
+ * Escape special characters in the given string of html.
+ *
+ * @param  {string} string The string to escape for inserting into HTML
+ * @return {string}
+ * @public
+ */
+
+function escapeHtml(string) {
+  var str = '' + string;
+  var match = matchHtmlRegExp.exec(str);
+
+  if (!match) {
+    return str;
+  }
+
+  var escape;
+  var html = '';
+  var index = 0;
+  var lastIndex = 0;
+
+  for (index = match.index; index < str.length; index++) {
+    switch (str.charCodeAt(index)) {
+      case 34: // "
+        escape = '&quot;';
+        break;
+      case 38: // &
+        escape = '&amp;';
+        break;
+      case 39: // '
+        escape = '&#39;';
+        break;
+      case 60: // <
+        escape = '&lt;';
+        break;
+      case 62: // >
+        escape = '&gt;';
+        break;
+      default:
+        continue;
+    }
+
+    if (lastIndex !== index) {
+      html += str.substring(lastIndex, index);
+    }
+
+    lastIndex = index + 1;
+    html += escape;
+  }
+
+  return lastIndex !== index
+    ? html + str.substring(lastIndex, index)
+    : html;
+}
+
+
+/***/ }),
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1175,6 +1261,8 @@ var _talqsTemplate = __webpack_require__(0);
 var _talqsTemplate2 = _interopRequireDefault(_talqsTemplate);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var escapeHtml = __webpack_require__(1);
 
 var data = [];
 var currentIndex = 0;
@@ -1188,14 +1276,29 @@ var loadComplete = function loadComplete(result) {
 var app = document.getElementById('app');
 var changeQSBtn = document.getElementById('changeQS');
 var info = document.getElementById('info');
+var questionLabelNode = document.getElementById('questionLabel');
+
+var questionOrganization = '\n  <div class="talqs_organization clearfix">\n      <label class="talqs_label">\u673A\u6784</label>\n      <div class="talqs_panel">{{data.systemName}}</div>\n  </div>\n';
+document.getElementById('method1').innerHTML = escapeHtml(questionLabelNode.outerHTML);
+document.getElementById('method2').innerHTML = 'var questionOrganization = `' + escapeHtml(questionOrganization) + '`';
+
+// 注册组件
+_talqsTemplate2.default.registerComponent({
+  questionLabel: questionLabelNode.innerHTML,
+  questionOrganization: questionOrganization
+});
+// 修改目前的模板
+_talqsTemplate2.default.updateTemplateList('analyzeWrapper', [{
+  component: 'questionLabel'
+}, {
+  component: 'questionOrganization',
+  index: 3
+}]);
 
 // 渲染试题
 var renderIndex = function renderIndex() {
   var currentData = data[currentIndex];
-  app.innerHTML = _talqsTemplate2.default.render(currentData, {
-    queIndex: currentIndex + 1,
-    entryTemplate: 'analyzeWrapper'
-  });
+  app.innerHTML = _talqsTemplate2.default.render(currentData, { queIndex: currentIndex + 1 });
   info.innerHTML = '\u903B\u8F91\u7C7B\u578B\uFF1A ' + currentData.logicQuesTypeName + '\uFF0C\u903B\u8F91\u7C7B\u578BID\uFF1A ' + currentData.logicQuesTypeId;
 };
 
@@ -1216,5 +1319,4 @@ changeQSBtn.addEventListener('click', function () {
 })(loadComplete);
 
 /***/ })
-
-},[7]);
+],[5]);

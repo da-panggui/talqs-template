@@ -2,7 +2,7 @@
 
 Talqs is a lightweight JavaScript library to render aibeike question data to HTML string. It's easy to integrate with your application. 
 
-[read more](https://hejinjun.github.io/talqs/)
+[read more]( https://hejinjun.github.io/talqs-template/)
 
 ## Examples
 
@@ -13,9 +13,7 @@ $ npm install
 $ npm run dev # serve examples at localhost:8080
 ```
 
-[Basic usage](https://hejinjun.github.io/talqs/dist/demo/base/)
-
-[Advanced options](https://hejinjun.github.io/talqs/dist/demo/template/)
+[Basic usage] https://hejinjun.github.io/talqs-template/dist/demo/)
 
 ## Concat
  

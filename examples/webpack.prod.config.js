@@ -23,7 +23,7 @@ module.exports = {
     },
     output: {
         filename: '[name].js',
-        path: __dirname + '/__build__'
+        path: __dirname + '/build'
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin('shared')

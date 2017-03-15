@@ -1,4 +1,4 @@
-webpackJsonp([3,10],{
+webpackJsonp([0,10],{
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -704,7 +704,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * 1: 大题显示（如果是复合题则拼装子题的解析显示）
          * 2: 子题显示（只显示子题的解析，只对复合题生效）
          */
-        analyzeVersion: 2,
+        analyzeVersion: 0,
 
         /**
          * 是否隐藏试题来源
@@ -1151,7 +1151,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 }
 
                 if (tempIndex < 0 && !item.remove) {
-                    tempIndex = item.index !== undefined ? item.index : templates.length;
+                    tempIndex = item.index !== undefined && item.index < templates.length ? item.index : templates.length;
                     templates.splice(tempIndex, 0, tempComponent);
                 }
             }
@@ -1164,7 +1164,93 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /***/ }),
 
-/***/ 11:
+/***/ 1:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * escape-html
+ * Copyright(c) 2012-2013 TJ Holowaychuk
+ * Copyright(c) 2015 Andreas Lubbe
+ * Copyright(c) 2015 Tiancheng "Timothy" Gu
+ * MIT Licensed
+ */
+
+
+
+/**
+ * Module variables.
+ * @private
+ */
+
+var matchHtmlRegExp = /["'&<>]/;
+
+/**
+ * Module exports.
+ * @public
+ */
+
+module.exports = escapeHtml;
+
+/**
+ * Escape special characters in the given string of html.
+ *
+ * @param  {string} string The string to escape for inserting into HTML
+ * @return {string}
+ * @public
+ */
+
+function escapeHtml(string) {
+  var str = '' + string;
+  var match = matchHtmlRegExp.exec(str);
+
+  if (!match) {
+    return str;
+  }
+
+  var escape;
+  var html = '';
+  var index = 0;
+  var lastIndex = 0;
+
+  for (index = match.index; index < str.length; index++) {
+    switch (str.charCodeAt(index)) {
+      case 34: // "
+        escape = '&quot;';
+        break;
+      case 38: // &
+        escape = '&amp;';
+        break;
+      case 39: // '
+        escape = '&#39;';
+        break;
+      case 60: // <
+        escape = '&lt;';
+        break;
+      case 62: // >
+        escape = '&gt;';
+        break;
+      default:
+        continue;
+    }
+
+    if (lastIndex !== index) {
+      html += str.substring(lastIndex, index);
+    }
+
+    lastIndex = index + 1;
+    html += escape;
+  }
+
+  return lastIndex !== index
+    ? html + str.substring(lastIndex, index)
+    : html;
+}
+
+
+/***/ }),
+
+/***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1175,6 +1261,8 @@ var _talqsTemplate = __webpack_require__(0);
 var _talqsTemplate2 = _interopRequireDefault(_talqsTemplate);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var escapeHtml = __webpack_require__(1);
 
 var data = [];
 var currentIndex = 0;
@@ -1188,6 +1276,19 @@ var loadComplete = function loadComplete(result) {
 var app = document.getElementById('app');
 var changeQSBtn = document.getElementById('changeQS');
 var info = document.getElementById('info');
+
+_talqsTemplate2.default.registerHelper('formatDifficulty', function (difficulty, template) {
+  difficulty = parseInt(difficulty, 10) || 0;
+  var output = '';
+  for (var i = 0; i < difficulty; i++) {
+    output += template;
+  }
+  return output;
+});
+
+var questionDifficultyNode = document.getElementById('questionDifficulty');
+document.getElementById('template').innerHTML = escapeHtml(questionDifficultyNode.outerHTML);
+_talqsTemplate2.default.registerComponent({ questionDifficulty: questionDifficultyNode.innerHTML });
 
 // 渲染试题
 var renderIndex = function renderIndex() {
@@ -1214,4 +1315,4 @@ changeQSBtn.addEventListener('click', function () {
 
 /***/ })
 
-},[11]);
+},[8]);

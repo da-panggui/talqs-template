@@ -1,5 +1,6 @@
-webpackJsonp([7,10],[
-/* 0 */
+webpackJsonp([5,10],{
+
+/***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -703,7 +704,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * 1: 大题显示（如果是复合题则拼装子题的解析显示）
          * 2: 子题显示（只显示子题的解析，只对复合题生效）
          */
-        analyzeVersion: 2,
+        analyzeVersion: 0,
 
         /**
          * 是否隐藏试题来源
@@ -1150,7 +1151,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 }
 
                 if (tempIndex < 0 && !item.remove) {
-                    tempIndex = item.index !== undefined ? item.index : templates.length;
+                    tempIndex = item.index !== undefined && item.index < templates.length ? item.index : templates.length;
                     templates.splice(tempIndex, 0, tempComponent);
                 }
             }
@@ -1162,10 +1163,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */
+
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1186,29 +1185,24 @@ var loadComplete = function loadComplete(result) {
   renderIndex();
 };
 
-var analyzeType = 0;
-
 var app = document.getElementById('app');
 var changeQSBtn = document.getElementById('changeQS');
-var changeTypeBtn = document.getElementById('changeType');
 var info = document.getElementById('info');
 
 // 渲染试题
 var renderIndex = function renderIndex() {
   var currentData = data[currentIndex];
-  app.innerHTML = _talqsTemplate2.default.render(currentData, { queIndex: currentIndex + 1, analyzeVersion: analyzeType });
-  info.innerHTML = '\u903B\u8F91\u7C7B\u578B\uFF1A ' + currentData.logicQuesTypeName + '\uFF0C\u903B\u8F91\u7C7B\u578BID\uFF1A ' + currentData.logicQuesTypeId + '\n  <br />\n  \u5F53\u524D\u7684\u89E3\u6790\u663E\u793A\u7248\u672C\u4E3A\uFF1A' + analyzeType;
+  app.innerHTML = _talqsTemplate2.default.render(currentData, {
+    queIndex: currentIndex + 1,
+    hideSource: true,
+    hideDifficulty: true
+  });
+  info.innerHTML = '\u903B\u8F91\u7C7B\u578B\uFF1A ' + currentData.logicQuesTypeName + '\uFF0C\u903B\u8F91\u7C7B\u578BID\uFF1A ' + currentData.logicQuesTypeId;
 };
 
 // 切换下一道题
 changeQSBtn.addEventListener('click', function () {
   currentIndex = currentIndex < data.length - 1 ? currentIndex + 1 : 0;
-  renderIndex();
-});
-
-// 切换解析显示版本
-changeTypeBtn.addEventListener('click', function () {
-  analyzeType = analyzeType < 2 ? analyzeType + 1 : 0;
   renderIndex();
 })
 
@@ -1223,4 +1217,5 @@ changeTypeBtn.addEventListener('click', function () {
 })(loadComplete);
 
 /***/ })
-],[4]);
+
+},[9]);

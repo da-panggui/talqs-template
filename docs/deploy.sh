@@ -5,4 +5,4 @@ cp -R ../../dist ./dist
 git init
 git add -A
 git commit -m 'update book'
-git push -f https://github.com/hejinjun/talqs.git master:gh-pages
+git push -f https://github.com/hejinjun/talqs-template.git master:gh-pages

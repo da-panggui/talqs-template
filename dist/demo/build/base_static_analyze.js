@@ -1,6 +1,5 @@
-webpackJsonp([0,10],{
-
-/***/ 0:
+webpackJsonp([7,10],[
+/* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -704,7 +703,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * 1: 大题显示（如果是复合题则拼装子题的解析显示）
          * 2: 子题显示（只显示子题的解析，只对复合题生效）
          */
-        analyzeVersion: 2,
+        analyzeVersion: 0,
 
         /**
          * 是否隐藏试题来源
@@ -1151,7 +1150,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 }
 
                 if (tempIndex < 0 && !item.remove) {
-                    tempIndex = item.index !== undefined ? item.index : templates.length;
+                    tempIndex = item.index !== undefined && item.index < templates.length ? item.index : templates.length;
                     templates.splice(tempIndex, 0, tempComponent);
                 }
             }
@@ -1163,94 +1162,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 
 /***/ }),
-
-/***/ 1:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * escape-html
- * Copyright(c) 2012-2013 TJ Holowaychuk
- * Copyright(c) 2015 Andreas Lubbe
- * Copyright(c) 2015 Tiancheng "Timothy" Gu
- * MIT Licensed
- */
-
-
-
-/**
- * Module variables.
- * @private
- */
-
-var matchHtmlRegExp = /["'&<>]/;
-
-/**
- * Module exports.
- * @public
- */
-
-module.exports = escapeHtml;
-
-/**
- * Escape special characters in the given string of html.
- *
- * @param  {string} string The string to escape for inserting into HTML
- * @return {string}
- * @public
- */
-
-function escapeHtml(string) {
-  var str = '' + string;
-  var match = matchHtmlRegExp.exec(str);
-
-  if (!match) {
-    return str;
-  }
-
-  var escape;
-  var html = '';
-  var index = 0;
-  var lastIndex = 0;
-
-  for (index = match.index; index < str.length; index++) {
-    switch (str.charCodeAt(index)) {
-      case 34: // "
-        escape = '&quot;';
-        break;
-      case 38: // &
-        escape = '&amp;';
-        break;
-      case 39: // '
-        escape = '&#39;';
-        break;
-      case 60: // <
-        escape = '&lt;';
-        break;
-      case 62: // >
-        escape = '&gt;';
-        break;
-      default:
-        continue;
-    }
-
-    if (lastIndex !== index) {
-      html += str.substring(lastIndex, index);
-    }
-
-    lastIndex = index + 1;
-    html += escape;
-  }
-
-  return lastIndex !== index
-    ? html + str.substring(lastIndex, index)
-    : html;
-}
-
-
-/***/ }),
-
-/***/ 8:
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1262,8 +1177,6 @@ var _talqsTemplate2 = _interopRequireDefault(_talqsTemplate);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var escapeHtml = __webpack_require__(1);
-
 var data = [];
 var currentIndex = 0;
 
@@ -1273,33 +1186,29 @@ var loadComplete = function loadComplete(result) {
   renderIndex();
 };
 
+var analyzeType = 0;
+
 var app = document.getElementById('app');
 var changeQSBtn = document.getElementById('changeQS');
+var changeTypeBtn = document.getElementById('changeType');
 var info = document.getElementById('info');
-
-_talqsTemplate2.default.registerHelper('formatDifficulty', function (difficulty, template) {
-  difficulty = parseInt(difficulty, 10) || 0;
-  var output = '';
-  for (var i = 0; i < difficulty; i++) {
-    output += template;
-  }
-  return output;
-});
-
-var questionDifficultyNode = document.getElementById('questionDifficulty');
-document.getElementById('template').innerHTML = escapeHtml(questionDifficultyNode.outerHTML);
-_talqsTemplate2.default.registerComponent({ questionDifficulty: questionDifficultyNode.innerHTML });
 
 // 渲染试题
 var renderIndex = function renderIndex() {
   var currentData = data[currentIndex];
-  app.innerHTML = _talqsTemplate2.default.render(currentData, { queIndex: currentIndex + 1 });
-  info.innerHTML = '\u903B\u8F91\u7C7B\u578B\uFF1A ' + currentData.logicQuesTypeName + '\uFF0C\u903B\u8F91\u7C7B\u578BID\uFF1A ' + currentData.logicQuesTypeId;
+  app.innerHTML = _talqsTemplate2.default.render(currentData, { queIndex: currentIndex + 1, analyzeVersion: analyzeType });
+  info.innerHTML = '\u903B\u8F91\u7C7B\u578B\uFF1A ' + currentData.logicQuesTypeName + '\uFF0C\u903B\u8F91\u7C7B\u578BID\uFF1A ' + currentData.logicQuesTypeId + '\n  <br />\n  \u5F53\u524D\u7684\u89E3\u6790\u663E\u793A\u7248\u672C\u4E3A\uFF1A' + analyzeType;
 };
 
 // 切换下一道题
 changeQSBtn.addEventListener('click', function () {
   currentIndex = currentIndex < data.length - 1 ? currentIndex + 1 : 0;
+  renderIndex();
+});
+
+// 切换解析显示版本
+changeTypeBtn.addEventListener('click', function () {
+  analyzeType = analyzeType < 2 ? analyzeType + 1 : 0;
   renderIndex();
 })
 
@@ -1314,5 +1223,4 @@ changeQSBtn.addEventListener('click', function () {
 })(loadComplete);
 
 /***/ })
-
-},[8]);
+],[4]);

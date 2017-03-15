@@ -103,30 +103,12 @@ TalqsTemplate.updateTemplateList = (key, list) => {
       }
 
       if (tempIndex < 0 && !item.remove) {
-        tempIndex = item.index !== undefined ? item.index : templates.length;
+        tempIndex = (item.index !== undefined && item.index < templates.length) ? item.index : templates.length;
         templates.splice(tempIndex, 0, tempComponent);
       }
     }
   })
   TalqsTemplate.config.templates[key] = templates;
 }
-
-
-
- 
-// const resetComponent = () => {
-//   const keys = Array.prototype.slice.call(arguments);
-//   let component = {};
-//   if (!keys || !keys.length) {
-//     component = cacheStore;
-//   } else {
-//     keys.forEach((key) => {
-//       component[key] = cacheStore[key] || ''
-//     })
-//   }
-//   registerComponent(component);
-// }
-
-// TalqsTemplate.resetComponent = resetComponent;
 
 export default TalqsTemplate;

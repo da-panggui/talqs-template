@@ -1,4 +1,4 @@
-webpackJsonp([2,10],[
+webpackJsonp([1,10],[
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -703,7 +703,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * 1: 大题显示（如果是复合题则拼装子题的解析显示）
          * 2: 子题显示（只显示子题的解析，只对复合题生效）
          */
-        analyzeVersion: 2,
+        analyzeVersion: 0,
 
         /**
          * 是否隐藏试题来源
@@ -1150,7 +1150,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 }
 
                 if (tempIndex < 0 && !item.remove) {
-                    tempIndex = item.index !== undefined ? item.index : templates.length;
+                    tempIndex = item.index !== undefined && item.index < templates.length ? item.index : templates.length;
                     templates.splice(tempIndex, 0, tempComponent);
                 }
             }
@@ -1250,7 +1250,8 @@ function escapeHtml(string) {
 /* 2 */,
 /* 3 */,
 /* 4 */,
-/* 5 */
+/* 5 */,
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1276,24 +1277,9 @@ var loadComplete = function loadComplete(result) {
 var app = document.getElementById('app');
 var changeQSBtn = document.getElementById('changeQS');
 var info = document.getElementById('info');
-var questionLabelNode = document.getElementById('questionLabel');
-
-var questionOrganization = '\n  <div class="talqs_organization clearfix">\n      <label class="talqs_label">\u673A\u6784</label>\n      <div class="talqs_panel">{{data.systemName}}</div>\n  </div>\n';
-document.getElementById('method1').innerHTML = escapeHtml(questionLabelNode.outerHTML);
-document.getElementById('method2').innerHTML = 'var questionOrganization = `' + escapeHtml(questionOrganization) + '`';
-
-// 注册组件
-_talqsTemplate2.default.registerComponent({
-  questionLabel: questionLabelNode.innerHTML,
-  questionOrganization: questionOrganization
-});
-// 修改目前的模板
-_talqsTemplate2.default.updateTemplateList('analyzeWrapper', [{
-  component: 'questionLabel'
-}, {
-  component: 'questionOrganization',
-  index: 3
-}]);
+var questionDifficultyNode = document.getElementById('questionDifficulty');
+document.getElementById('template').innerHTML = escapeHtml(questionDifficultyNode.outerHTML);
+_talqsTemplate2.default.registerComponent({ questionDifficulty: questionDifficultyNode.innerHTML });
 
 // 渲染试题
 var renderIndex = function renderIndex() {
@@ -1319,4 +1305,4 @@ changeQSBtn.addEventListener('click', function () {
 })(loadComplete);
 
 /***/ })
-],[5]);
+],[6]);

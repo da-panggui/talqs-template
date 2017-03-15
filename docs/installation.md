@@ -1,6 +1,10 @@
 # 安装
 
-### 直接[下载](https://hejinjun.github.io/talqs/dist/talqsTemplate.js)
+### 直接[下载](https://hejinjun.github.io/talqs-template/dist/talqsTemplate.js)
+
+[talqsTemplate.min.js](https://hejinjun.github.io/talqs-template/dist/talqsTemplate.min.js)
+
+[talqsTemplate.css](https://hejinjun.github.io/talqs-template/dist/talqsTemplate.css)
 
 ``` html
 <link href="talqsTemplate.css" rel="stylesheet">
@@ -27,7 +31,7 @@ yarn add talqs
 如果需要使用 dev 分支下的最新版本，您可以直接从 GitHub 上克隆代码并自己构建。
 
 ``` bash
-git clone https://github.com/hejinjun/talqs.git
+git clone https://github.com/hejinjun/talqs-template.git
 npm install
 npm run build
 ```

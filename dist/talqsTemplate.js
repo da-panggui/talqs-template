@@ -827,7 +827,7 @@ var talqsTemplateConfig = {
    * 1: 大题显示（如果是复合题则拼装子题的解析显示）
    * 2: 子题显示（只显示子题的解析，只对复合题生效）
    */
-  analyzeVersion: 2,
+  analyzeVersion: 0,
 
   /**
    * 是否隐藏试题来源
@@ -1277,7 +1277,7 @@ TalqsTemplate.updateTemplateList = function (key, list) {
       }
 
       if (tempIndex < 0 && !item.remove) {
-        tempIndex = item.index !== undefined ? item.index : templates.length;
+        tempIndex = (item.index !== undefined && item.index < templates.length) ? item.index : templates.length;
         templates.splice(tempIndex, 0, tempComponent);
       }
     }

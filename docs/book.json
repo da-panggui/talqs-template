@@ -5,11 +5,11 @@
     "plugins": ["edit-link", "prism", "theme-vuejs@git+https://github.com/pearofducks/gitbook-plugin-theme-vuejs.git", "-fontsettings", "-highlight", "github"],
     "pluginsConfig": {
         "edit-link": {
-            "base": "https://github.com/hejinjun/talqs/tree/master/docs",
+            "base": "https://github.com/hejinjun/talqs-template/tree/master/docs",
             "label": "编辑此页面"
         },
         "github": {
-            "url": "https://github.com/hejinjun/talqs"
+            "url": "https://github.com/hejinjun/talqs-template"
         }
     },
     "links": {

@@ -6,6 +6,7 @@ rm -rf $demo
 mkdir $demo
 
 lessc ./talqsTemplate.less $dist/talqsTemplate.css
+# lessc --clean-css="advanced" ./talqsTemplate.less $dist/talqsTemplate.min.css
 
 # 拷贝静态资源
 cp ./index.html ./data.json ./talqsTemplate.less $demo
@@ -18,4 +19,4 @@ for f in **/index.html; do
 done
 
 # 拷贝产品版 js
-mv ./__build__ $demo
+mv ./build $demo
