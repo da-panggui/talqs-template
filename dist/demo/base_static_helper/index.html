@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Base Static Index</title>
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet/less" type="text/css" href="../talqsTemplate.less" />
+  <script src="https://cdn.bootcss.com/less.js/2.7.2/less.js"></script>
+  <style>
+    .row {
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <p class="text-info">
+        该 Demo 展示了如何向 TalqsTemplate 注册 helper, 关于 helper 可以参考 <a href="https://github.com/aui/artTemplate" target="_blank">artTemplate helper</a>
+        <br>
+        <br>
+        <code>formatDifficulty</code> 为一个新添加的 helper，它允许在渲染试题难度时调用 helper 进行逻辑处理
+        <pre><code id="template"></code></pre>
+        <br>
+        注册 helper 需要调用 TalqsTemplate 的 <code>registerHelper</code>方法. 例如:
+        <br>
+        <pre><code>
+TalqsTemplate.registerHelper('formatDifficulty', function(difficulty, template) {
+  difficulty = parseInt(difficulty, 10) || 0
+  let output = ''
+  for (let i = 0; i < difficulty; i++) {
+      output += template
+  }
+  return output
+})
+        </code></pre>
+      </p>
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-primary" id="changeQS">下一题</button>
+    </div>
+    <div class="row" id="info"></div>
+    <div id="app" class="row"></div>
+  </div>
+  <script id="questionDifficulty" type="text/html">
+    <div class="talqs_difficulty clearfix">
+       {{#data.difficulty | formatDifficulty:'<span>&#9829;</span>'}}
+    </div>
+  </script>
+  <script src="../__build__/shared.js"></script>
+  <script src="../__build__/base_static_helper.js"></script>
+</body>
+</html>

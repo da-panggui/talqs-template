@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Base Static Hide</title>
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet/less" type="text/css" href="../talqsTemplate.less" />
+  <script src="https://cdn.bootcss.com/less.js/2.7.2/less.js"></script>
+  <style>
+    .row {
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <p class="text-info">该 Demo 展示了如何使用 TalqsTemplate 隐藏试题来源和试题难度，
+        <br>
+        如果需要隐藏试题的来源，可以设置配置对象的 <code>hideSource</code> 字段为 <code>true</code>
+        <br>
+        如果需要隐藏试题的难度，可以设置配置对象的 <code>hideDifficulty</code> 字段为 <code>true</code>
+        <br>
+        注意： 复合题子题默认不显示试题来源和试题难度，如需显示，请自定义模板进行修改
+      </p>
+    </div>
+    <div class="row">
+      以下为配置的代码: 
+      <pre>// data:  试题数据
+// hideSource: 隐藏试题来源标示
+// hideDifficulty: 隐藏试题难度标示
+
+TalqsTemplate.render(data, {
+  hideSource: true,
+  hideDifficulty: true 
+});</pre>
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-primary" id="changeQS">下一题</button>
+    </div>
+    <div class="row" id="info"></div>
+    <div id="app" class="row"></div>
+  </div>
+  <script src="../__build__/shared.js"></script>
+  <script src="../__build__/base_static_hide.js"></script>
+</body>
+</html>

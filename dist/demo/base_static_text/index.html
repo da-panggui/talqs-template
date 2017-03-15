@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Base Static Index</title>
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet/less" type="text/css" href="../talqsTemplate.less" />
+  <script src="https://cdn.bootcss.com/less.js/2.7.2/less.js"></script>
+  <style>
+    .row {
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <p class="text-info">该 Demo 展示了如何使用 TalqsTemplate 渲染带有试题题号的配置，
+        <br>
+        如果需要显示试题的题号，可以给配置对象的 <code>queIndex</code> 字段传值
+        <br>
+        需要注意的是复合题子题默认根据子题的索引显示题号，无法通过传值来更改
+      </p>
+    </div>
+    <div class="row">
+      以下为配置的代码: 
+      <pre>// data:  试题数据  index: 试题题号（自定义传值）
+TalqsTemplate.render(data, { queIndex: index });</pre>
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-primary" id="changeQS">下一题</button>
+    </div>
+    <div class="row" id="info"></div>
+    <div id="app" class="row"></div>
+  </div>
+  <script src="../__build__/shared.js"></script>
+  <script src="../__build__/base_static_index.js"></script>
+</body>
+</html>

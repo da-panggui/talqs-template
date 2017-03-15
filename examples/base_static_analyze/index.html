@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Base Static Analyze</title>
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet/less" type="text/css" href="../talqsTemplate.less" />
+  <script src="https://cdn.bootcss.com/less.js/2.7.2/less.js"></script>
+  <style>
+    .row {
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <p class="text-info">
+        通过设置 TalqsTemplate 配置对象的 <code>analyzeVersion</code> 字段即可切换试题解析的显示版本
+        <br>
+          <code>analyzeVersion</code> 为 0 则不显示解析模板
+        <br>
+          <code>analyzeVersion</code> 为 1 则只显示子题解析，只对复合题有用
+        <br>
+          <code>analyzeVersion</code> 为 2 则只显示大题解析模板，如果是复合题则拼接子题答案，解析集中显示
+        <br>
+        <br>
+        <br>
+        点击切换解析显示版本按钮查看更多效果，注意 <code>analyzeVersion</code> 为 1 时只对复合题有效
+        <br>
+        <pre><code>TalqsTemplate.render(data, { analyzeVersion: 2 });</code></pre>
+      </p>
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-primary" id="changeQS">下一题</button>
+      <button type="submit" class="btn btn-primary" id="changeType">切换解析显示版本</button>
+    </div>
+    <div class="row" id="info"></div>
+    <div id="app" class="row"></div>
+  </div>
+  <script src="../__build__/shared.js"></script>
+  <script src="../__build__/base_static_analyze.js"></script>
+</body>
+</html>

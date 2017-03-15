@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Base Static Entry</title>
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet/less" type="text/css" href="../talqsTemplate.less" />
+  <script src="https://cdn.bootcss.com/less.js/2.7.2/less.js"></script>
+  <style>
+    .row {
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <p class="text-info">该 Demo 展示了如何使用 TalqsTemplate 配置对象的 <code>entryTemplate</code> 字段来渲染指定的模板结构
+        <br>
+        在 TalqsTemplate 中默认渲染的是 <code>question</code> 模板，该模板包含完整的试题结构，包括试题题干 + 解析
+        <br>
+        当插件内置模板不能满足需求时可以自定义模板并且将其设置为 <code>entryTemplate</code>， 或者通过修改 <code>entryTemplate</code>来渲染特定的模板
+        <br>
+        例如:
+        <br>
+        <pre><code>TalqsTemplate.render(data, {entryTemplate: 'analyzeWrapper'});</code></pre>
+        <br>
+        通过设置 <code>entryTemplate: 'analyzeWrapper'</code>将<code>analyzeWrapper</code> 作为主模板结构进行渲染
+        <br>
+        请参考下面的呈现效果：
+      </p>
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-primary" id="changeQS">下一题</button>
+    </div>
+    <div class="row" id="info"></div>
+    <div id="app" class="row talqs"></div>
+  </div>
+  <script src="../__build__/shared.js"></script>
+  <script src="../__build__/base_static_entry.js"></script>
+</body>
+</html>

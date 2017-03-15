@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Base Static Component</title>
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet/less" type="text/css" href="../talqsTemplate.less" />
+  <script src="https://cdn.bootcss.com/less.js/2.7.2/less.js"></script>
+  <style>
+    .row {
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <p class="text-info">该 Demo 展示了如何使用 TalqsTemplate 添加自定义组件</p>
+      <p>在下面的例子中，我们将自定义两个组件，并且添加到解析模板中</p>
+      <p>首选，我们可以通过两种方式定义组件</p>
+      <p>第一种： 直接在 HTML 文件中定义，例如：</p>
+      <pre><code id="method1"></code></pre>
+      <p>第二种： 在 <code>js</code> 文件中定义组件字符串</p>
+      <pre><code id="method2"></code></pre>
+
+      <p>其次，需要通过 <code>registerComponent</code> 方法来注册定义好的组件</p>
+      <p>在该 Demo 中，我们定义了两个组件，分别为标签组件和机构组件，下面我们通过 API 将其添加到组件集合中</p>
+      <pre>
+        <code>
+// 注册组件
+// 通过HTML注册的组件需要获取innerHTML
+var questionLabel = document.getElementById('questionLabel').innerHTML;
+TalqsTemplate.registerComponent({
+  questionLabel,
+  questionOrganization
+})
+        </code>
+      </pre>
+    <p>
+      最后，通过<code>updateTemplateList</code>更新解区域的模板结构
+      <br>
+      这里需要注意的是对于 <code>questionOrganization</code> 试题机构组件，我们更新时指定了其出现的顺序 <code>index</code>.
+      <br>
+      在解析模板中试题机构将在组件列表中的第四个呈现
+      <br>
+      如果不指定 <code>index</code>，默认将组件添加到列表的末尾
+      <pre>
+        <code>
+TalqsTemplate.updateTemplateList('analyzeWrapper', [
+  {
+    component: 'questionLabel'
+  },
+  { 
+    component: 'questionOrganization',
+    index: 3
+  }
+])
+        </code>
+      </pre>
+    </p>
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-primary" id="changeQS">下一题</button>
+    </div>
+    <div class="row" id="info"></div>
+    <div id="app" class="row"></div>
+  </div>
+  <script id="questionLabel" type="text/html">
+    <div class="talqs_keyword clearfix">
+      <label class="talqs_label">标签</label>
+      <div class="talqs_panel">
+        {{data.keyWord.split(';zk;').join(' ')}}  
+      </div>
+    </div>
+  </script>
+  <script src="../__build__/shared.js"></script>
+  <script src="../__build__/base_static_component.js"></script>
+</body>
+</html>
