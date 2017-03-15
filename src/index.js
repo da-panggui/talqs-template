@@ -55,12 +55,9 @@ const registerHelper = (name, fn) => {
 TalqsTemplate.registerHelper = registerHelper;
 
 // 注册内置辅助函数
-const registerBuiltInHelper = (() => {
-  for(let key in helper) {
-    registerHelper(key, helper[key])
-  }
-})();
-
+for(let key in helper) {
+  registerHelper(key, helper[key])
+}
 
 /**
  * [registerComponent 注册缓存组件模板]

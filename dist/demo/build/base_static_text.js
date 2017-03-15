@@ -1104,11 +1104,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     TalqsTemplate.registerHelper = registerHelper;
 
     // 注册内置辅助函数
-    var registerBuiltInHelper = function () {
-        for (var key in helper) {
-            registerHelper(key, helper[key]);
-        }
-    }();
+    for (var key in helper) {
+        registerHelper(key, helper[key]);
+    }
 
     /**
      * [registerComponent 注册缓存组件模板]

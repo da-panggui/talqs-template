@@ -42,8 +42,6 @@
     "eslint-loader": "^1.6.1",
     "express": "^4.14.1",
     "jasmine": "^2.5.3",
-    "less": "^2.7.2",
-    "less-loader": "^3.0.0",
     "nightwatch": "^0.9.12",
     "rollup": "^0.41.4",
     "rollup-plugin-babel": "^2.7.1",
@@ -51,7 +49,6 @@
     "rollup-plugin-replace": "^1.1.1",
     "rollup-watch": "^3.2.2",
     "selenium-server": "^3.0.1",
-    "style-loader": "^0.13.2",
     "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.16.1"

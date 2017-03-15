@@ -30,7 +30,6 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.js$/, exclude: /node_modules/, loader: ['babel-loader', 'eslint-loader'] },
-      { test: /\.less$/, loader: [ 'style-loader', 'less-loader' ] }
     ]
   },
   plugins: [
