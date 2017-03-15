@@ -77,11 +77,8 @@ TalqsTemplate.registerComponent = registerComponent;
 
 /**
  * [registerTemplate 注册一个模板]
- * @param  {[type]} destKey  [现有模板配置的名称，空则新添加一组]
  * @param  {[type]} key      [模板名称]
- * @param  {[type]} template [模板字符]
- * @param  {[type]} index    [需要插入的位置]
- * @return {[type]}          [description]
+ * @param  {[type]} list     [组件列表]
  */
 TalqsTemplate.registerTemplate = (key, list) => {
   TalqsTemplate.config.templates[key] = list;
