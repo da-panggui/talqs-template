@@ -39,7 +39,6 @@ export const components = {
     QueID: 'questionID',
 }
 
-
 const templateConfig = {
     [question]:[
       stemsWrapper,

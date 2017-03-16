@@ -15,12 +15,12 @@
  * config.hideSource:   隐藏来源标示
  */
 
-import { stylePrefix }from '../../config/style';
+import style from '../../config/style';
 
 export default
 `
 {{if !isSub && !config.hideSource}}
-  <div class="${stylePrefix}_source">
+  <div class="${style.source}">
     {{data.queSource}}
   </div>
 {{/if}}

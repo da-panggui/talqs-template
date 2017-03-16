@@ -15,14 +15,14 @@
  * config.hideDifficulty:   隐藏难度标示
  */
 
-import { stylePrefix }from '../../config/style';
+import style from '../../config/style';
 
 const star = '<span>&#9733;</span>';
 
 export default
 `
 {{if !isSub && !config.hideDifficulty}}
-  <div class="${stylePrefix}_difficulty">
+  <div class="${style.difficulty}">
     {{#data.difficulty | formatDifficulty:'${star}'}}
   </div>
 {{/if}}

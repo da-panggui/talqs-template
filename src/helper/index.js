@@ -1,4 +1,3 @@
-import { BLANK_REGEX } from '../regex/index';
 
 /**
  * [helper 模板对象的 helper 扩展]
@@ -48,21 +47,5 @@ helper.formatAnswer = function(answer) {
     }
     return output
 }
-
-/**
- * [transfromBlankContent description]
- * @return {[type]} [description]
- */
-helper.transfromBlankContent = function(content, type) {
-    if (type == 4) {
-        let index = -1;
-        content = content.replace(BLANK_REGEX, function(match) {
-            index++;
-            return `<input type="text" data-blank-item="${index}">`
-        })
-    }
-    return content;
-}
-
 
 export default helper

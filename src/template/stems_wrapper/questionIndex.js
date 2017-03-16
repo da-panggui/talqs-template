@@ -12,12 +12,12 @@
  *
  */
 
-import { stylePrefix }from '../../config/style';
+import style from '../../config/style';
 
 export default
 `
 {{if index && index > 0}}
-  <span class="${stylePrefix}_index">
+  <span class="${style.index}">
     {{index}}
   </span>
 {{/if}}

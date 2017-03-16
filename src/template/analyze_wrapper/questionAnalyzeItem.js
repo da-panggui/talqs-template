@@ -1,16 +1,18 @@
 import { analyzeItem } from '../../config/template';
+import style from '../../config/style';
+
 export default
     `
 {{if data.childList}}
   {{each data.childList}}
-    <div class="talqs_analyze_item">
-      <div class="talqs_analyze_item_index">{{$index+1}}</div>
+    <div class="${style.analyzeItem}">
+      <div class="${style.analyzeItemIndex}">{{$index+1}}</div>
       {{include '${analyzeItem}' {data:$value} ''}}
     </div>
   {{/each}}
 {{else}}
-  <div class="talqs_panel_item">
-    <div class="talqs_panel_item_content">{{#data.analysis}}</div>
+  <div class="${style.panelItem}">
+    <div class="{style.panelItemContent}">{{#data.analysis}}</div>
   </div>
 {{/if}}
 `

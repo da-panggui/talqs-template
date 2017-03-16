@@ -1,13 +1,11 @@
-import { stylePrefix }from '../../config/style';
+import style from '../../config/style';
 
 import { childQSAnalyzeWrapper } from '../../config/template';
-
-const styleMain = `${stylePrefix}_analyzeSingle`;
 
 export default
 `
 {{if isSub && config.analyzeVersion === 1 && !data.childList }}
-   <div class="${styleMain}">
+   <div class="${style.analyzeSingle}">
     {{ each config.templates['${childQSAnalyzeWrapper}'] }}
       {{include $value}}
     {{/each}}

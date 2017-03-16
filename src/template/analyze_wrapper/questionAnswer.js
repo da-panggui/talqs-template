@@ -2,17 +2,17 @@
  * 试题答案组件
  */
 
-import { stylePrefix, label, panel, clear }from '../../config/style';
+import style from '../../config/style';
 
 import { answerItem } from '../../config/template';
 
 export default
 `
-<div class="${stylePrefix}_answer ${clear}">
-  <label class="${label}">
+<div class="${style.answer}  ${style.clear}">
+  <label class="${style.label}">
     {{config.labels.answer}}
   </label>
-  <div class="${panel}">
+  <div class="${style.panel}">
     {{include '${answerItem}'}}
   </div>
 </div>

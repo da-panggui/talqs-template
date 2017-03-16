@@ -817,11 +817,6 @@ var labelConfig = {
 
 var talqsTemplateConfig = {
   /**
-   * 交互版标示
-   */
-  interactive: false,
-
-  /**
    * 解析显示版本
    * 0: 不显示解析
    * 1: 大题显示（如果是复合题则拼装子题的解析显示）
@@ -859,12 +854,6 @@ var talqsTemplateConfig = {
    */
   entryTemplate: question,
 };
-
-/**
- * [BLANK_REGEX 空格正则匹配]
- * @type {RegExp}
- */
-var BLANK_REGEX = /(?:&nbsp;)*<(?:u|span\s[^>]+)>(?:&nbsp;|\s){3,}(\d*)(?:&nbsp;|\s){3,}<\/(?:u|span)>(?:&nbsp;)*/g;
 
 /**
  * [helper 模板对象的 helper 扩展]
@@ -915,30 +904,44 @@ helper.formatAnswer = function(answer) {
     return output
 };
 
-/**
- * [transfromBlankContent description]
- * @return {[type]} [description]
- */
-helper.transfromBlankContent = function(content, type) {
-    if (type == 4) {
-        var index = -1;
-        content = content.replace(BLANK_REGEX, function(match) {
-            index++;
-            return ("<input type=\"text\" data-blank-item=\"" + index + "\">")
-        });
-    }
-    return content;
+var main = 'talqs';
+var options = main + "_options";
+
+var style = {
+  main: main,
+  options: options,
+  // 题干
+  stems: (main + "_main"),
+  // 子题
+  subqs: (main + "_subqs"),
+  content: (main + "_content"),
+  difficulty: (main + "_difficulty"),
+  index: (main + "_index"),
+  source: (main + "_source"),
+  knowledgePoint: (main + "_knowledgePoint"),
+  id: (main + "_id"),
+  analyzeItem: '${main}_analyze_item',
+  analyzeItemIndex: '${main}_analyze_item_index',
+  panelItem: '${main}_panel_item',
+  panelItemContent: '${main}_panel_item_content',
+  answer: (main + "_answer"),
+  analyze: (main + "_analyze"),
+  analyzeGroup: (main + "_analyzeGroup"),
+  analyzeSingle: (main + "analyzeSingle"),
+
+  optionsList: (options + "_list"),
+  optionsRows: (options + "_rows"),
+  optionsColumns: (options + "_columns"),
+  optionsItem: (options + "_columns_item"),
+  optionsIndex: (options + "_index"),
+  optionsLabel: (options + "_label"),
+  optionsContent: (options + "_content"),
+
+  label: (main + "_label"),
+  panel: (main + "_panel"),
+  tree: (main + "_tree"),
+  clear: 'clearfix'
 };
-
-var stylePrefix = 'talqs';
-
-var label = stylePrefix + "_label";
-
-var panel = stylePrefix + "_panel";
-
-var tree = stylePrefix + "_tree";
-
-var clear = 'clearfix';
 
 /**
  * 默认的试题显示组件
@@ -946,7 +949,7 @@ var clear = 'clearfix';
  * 详情参见 config/template.js
  */
 
-var question$1 = ("<div class=\"" + stylePrefix + "\">\n  {{ each config.templates['" + question + "'] }}\n    {{include $value}}\n  {{/each}}\n</div>\n");
+var question$1 = ("<div class=\"" + (style.main) + "\">\n  {{ each config.templates['" + question + "'] }}\n    {{include $value}}\n  {{/each}}\n</div>\n");
 
 /**
  * 试题题干容器组件
@@ -955,17 +958,13 @@ var question$1 = ("<div class=\"" + stylePrefix + "\">\n  {{ each config.templat
  * 详情参看 config/template.js 
  */
 
-var styleMain = stylePrefix + "_main";
-
-var stemsWrapper$1 = ("\n<div class=\"" + styleMain + "\">\n {{each config.templates['" + stemsWrapper + "']}}\n    {{include $value}}\n {{/each}}\n</div>\n");
+var stemsWrapper$1 = ("\n<div class=\"" + (style.stems) + "\">\n {{each config.templates['" + stemsWrapper + "']}}\n    {{include $value}}\n {{/each}}\n</div>\n");
 
 /**
  * 大题解析组件
  */
 
-var styleMain$1 = stylePrefix + "_analyzeGroup";
-
-var analyzeWrapper$1 = ("\n  {{if config.analyzeVersion === 2}}\n     <div class=\"" + styleMain$1 + "\">\n      {{ each config.templates['" + analyzeWrapper + "'] }}\n        {{include $value}}\n      {{/each}}\n    </div>\n  {{/if}}\n");
+var analyzeWrapper$1 = ("\n  {{if config.analyzeVersion === 2}}\n     <div class=\"" + (style.analyzeGroup) + "\">\n      {{ each config.templates['" + analyzeWrapper + "'] }}\n        {{include $value}}\n      {{/each}}\n    </div>\n  {{/if}}\n");
 
 /**
  * 试题题号组件
@@ -981,7 +980,7 @@ var analyzeWrapper$1 = ("\n  {{if config.analyzeVersion === 2}}\n     <div class
  *
  */
 
-var questionIndex = ("\n{{if index && index > 0}}\n  <span class=\"" + stylePrefix + "_index\">\n    {{index}}\n  </span>\n{{/if}}\n");
+var questionIndex = ("\n{{if index && index > 0}}\n  <span class=\"" + (style.index) + "\">\n    {{index}}\n  </span>\n{{/if}}\n");
 
 /**
  * 试题来源组件
@@ -1000,7 +999,7 @@ var questionIndex = ("\n{{if index && index > 0}}\n  <span class=\"" + stylePref
  * config.hideSource:   隐藏来源标示
  */
 
-var questionSource = ("\n{{if !isSub && !config.hideSource}}\n  <div class=\"" + stylePrefix + "_source\">\n    {{data.queSource}}\n  </div>\n{{/if}}\n");
+var questionSource = ("\n{{if !isSub && !config.hideSource}}\n  <div class=\"" + (style.source) + "\">\n    {{data.queSource}}\n  </div>\n{{/if}}\n");
 
 /**
  * 试题题干组件
@@ -1010,14 +1009,9 @@ var questionSource = ("\n{{if !isSub && !config.hideSource}}\n  <div class=\"" +
  * data.content               试题题干
  * data.hideContent           隐藏题干标示
  *
- * 交互版
- * data-que-id                试题ID
- * data-talqs-type="blank"    标记为填空题
  */
 
-var styleMain$2 = stylePrefix + "_content clearfix";
-
-var questionContent = ("\n{{if data.content && !data.hideContent}}\n  {{if config.interactive && data.logicQuesTypeId == 4}}\n    <div class=\"" + styleMain$2 + "\" data-talqs-type=\"blank\" data-que-id=\"{{data.queId}}\">\n      {{#data.content | transfromBlankContent:data.logicQuesTypeId}}\n    </div>\n  {{else}}\n    <div class=\"" + styleMain$2 + "\">\n      {{#data.content}}\n    </div>\n  {{/if}}\n{{/if}}\n");
+var questionContent = ("\n{{if data.content && !data.hideContent}}\n  <div class=\"" + (style.content) + " " + (style.clear) + "\">{{#data.content}}</div>\n{{/if}}\n");
 
 /**
  * 试题选项组件模板
@@ -1040,51 +1034,9 @@ var questionContent = ("\n{{if data.content && !data.hideContent}}\n  {{if confi
  * 试题的 isCloze 标记是否是完型填空，完型填空需要在选项前添加对应的题号（行号）
  * 1. A.XXX B.XXX C.XXX D.XXX
  * n. A.XXX B.XXX C.XXX D.XXX
- *
- * 交互版特有属性
- * data-talqs-type:   组件交互类型
- * data-logic-type:   试题逻辑类型
- * data-que-id:       试题ID
- * data-option-group: 选项行 
- * data-option-item:  选项, 对应的值为A、B、C、D...
  */
 
-/**
- * stylePrefix 样式类名前缀配置
- * @type {String}
- */
-var main = stylePrefix + "_options";
-
-var style = {
-  main: main,
-  list: (main + "_list"),
-  rows: (main + "_rows"),
-  columns: (main + "_columns"),
-  item: (main + "_columns_item"),
-  index: (main + "_index"),
-  label: (main + "_label"),
-  content: (main + "_content"),
-  clear: 'clearfix'
-};
-
-/**
- * [interaction 交互版配置]
- */
-
-var interaction = {
-  container: ['data-talqs-type="choice"',
-              'data-que-id="{{data.queId}}"',
-              'data-logic-type="{{data.logicQuesTypeId}}"' ],
-  group: ['data-option-group="{{$index}}"'],
-  item: ['data-option-item="{{$value.aoVal}}"']
-};
-
-
-var getAttr = function (key) {
-  return interaction[key].join(' ');
-};
-
-var questionOptions = ("\n{{ if data.answerOptionList }}\n    <div class=\"" + (style.main) + "\" \n      {{if config.interactive && (data.logicQuesTypeId == 1 || data.logicQuesTypeId == 2) }}\n        " + (getAttr('container')) + "\n      {{/if}}>\n    <ul class=\"" + (style.list) + "\">\n      {{each data.answerOptionList }}\n        <li class=\"" + (style.rows) + "\">\n          {{if data.isCloze }}\n            <span class=\"" + (style.index) + "\">{{$index+1}}. </span>\n          {{/if}}\n          <ul class=\"" + (style.columns) + "_{{$value.length}} " + (style.clear) + "\" \n            {{if config.interactive && (data.logicQuesTypeId == 1 || data.logicQuesTypeId == 2) }}\n              " + (getAttr('group')) + "\n            {{/if}}>\n            {{each $value}}\n              <li class=\"" + (style.item) + " " + (style.clear) + "\" \n                {{if config.interactive && (data.logicQuesTypeId == 1 || data.logicQuesTypeId == 2) }}\n                  " + (getAttr('item')) + "\n                {{/if}}>\n                <span class=\"" + (style.label) + "\">{{$value.aoVal}}. </span>\n                <div class=\"" + (style.content) + "\">{{#$value.content}}</div>\n              </li>\n            {{/each}}\n          </ul>\n        </li>\n      {{/each}}\n    </ul>\n  </div>\n{{/if}}\n");
+var questionOptions = ("\n{{ if data.answerOptionList }}\n  <div class=\"" + (style.options) + "\">\n    <ul class=\"" + (style.optionsList) + "\">\n      {{each data.answerOptionList }}\n        <li class=\"" + (style.optionsRows) + "\">\n          {{if data.isCloze }}\n            <span class=\"" + (style.optionsIndex) + "\">{{$index+1}}. </span>\n          {{/if}}\n          <ul class=\"" + (style.optionsColumns) + "_{{$value.length}} " + (style.clear) + "\">\n            {{each $value}}\n              <li class=\"" + (style.optionsItem) + " " + (style.clear) + "\">\n                <span class=\"" + (style.optionsLabel) + "\">{{$value.aoVal}}. </span>\n                <div class=\"" + (style.optionsContent) + "\">{{#$value.content}}</div>\n              </li>\n            {{/each}}\n          </ul>\n        </li>\n      {{/each}}\n    </ul>\n  </div>\n{{/if}}\n");
 
 /**
  * 试题难度组件
@@ -1105,7 +1057,7 @@ var questionOptions = ("\n{{ if data.answerOptionList }}\n    <div class=\"" + (
 
 var star = '<span>&#9733;</span>';
 
-var questionDifficulty = ("\n{{if !isSub && !config.hideDifficulty}}\n  <div class=\"" + stylePrefix + "_difficulty\">\n    {{#data.difficulty | formatDifficulty:'" + star + "'}}\n  </div>\n{{/if}}\n");
+var questionDifficulty = ("\n{{if !isSub && !config.hideDifficulty}}\n  <div class=\"" + (style.difficulty) + "\">\n    {{#data.difficulty | formatDifficulty:'" + star + "'}}\n  </div>\n{{/if}}\n");
 
 /**
  * 复合题子题模板，递归显示子题
@@ -1119,45 +1071,32 @@ var questionDifficulty = ("\n{{if !isSub && !config.hideDifficulty}}\n  <div cla
 // 子题数据
 var childData = '{data:$value,config:config,index:$index+1,isSub:true}';
 
-var questionChildList = ("\n{{ if data.childList }}\n  <div class=\"" + stylePrefix + "_subqs\">\n    {{each data.childList}}\n      {{include '" + stemsWrapper + "' " + childData + " ''}}\n    {{/each}}\n  </div>\n{{/if}}\n");
+var questionChildList = ("\n{{ if data.childList }}\n  <div class=\"" + (style.subqs) + "\">\n    {{each data.childList}}\n      {{include '" + stemsWrapper + "' " + childData + " ''}}\n    {{/each}}\n  </div>\n{{/if}}\n");
 
-var styleMain$3 = stylePrefix + "_analyzeSingle";
-
-var childQSAnalyzeWrapper$1 = ("\n{{if isSub && config.analyzeVersion === 1 && !data.childList }}\n   <div class=\"" + styleMain$3 + "\">\n    {{ each config.templates['" + childQSAnalyzeWrapper + "'] }}\n      {{include $value}}\n    {{/each}}\n  </div>\n{{/if}}\n");
+var childQSAnalyzeWrapper$1 = ("\n{{if isSub && config.analyzeVersion === 1 && !data.childList }}\n   <div class=\"" + (style.analyzeSingle) + "\">\n    {{ each config.templates['" + childQSAnalyzeWrapper + "'] }}\n      {{include $value}}\n    {{/each}}\n  </div>\n{{/if}}\n");
 
 /**
  * 试题答案组件
  */
 
-var questionAnswer = ("\n<div class=\"" + stylePrefix + "_answer " + clear + "\">\n  <label class=\"" + label + "\">\n    {{config.labels.answer}}\n  </label>\n  <div class=\"" + panel + "\">\n    {{include '" + answerItem + "'}}\n  </div>\n</div>\n");
+var questionAnswer = ("\n<div class=\"" + (style.answer) + "  " + (style.clear) + "\">\n  <label class=\"" + (style.label) + "\">\n    {{config.labels.answer}}\n  </label>\n  <div class=\"" + (style.panel) + "\">\n    {{include '" + answerItem + "'}}\n  </div>\n</div>\n");
 
-// import { stylePrefix, label, tree, clear }from '../../config/style';
-//  {{each data.answer}}
-//   <div class="talqs_panel_item">
-//     {{ if data.answer.length > 1}}
-//       <div class="talqs_panel_item_title">〔{{$index+1}}〕</div>
-//     {{/if}}
-//     <div class="talqs_panel_item_content">{{#$value}}</div>
-//   </div>
-// {{/each}}
- 
-
-var questionAnswerItem = ("\n{{if data.childList}}\n  {{each data.childList}}\n    <div class=\"talqs_analyze_item\">\n      <div class=\"talqs_analyze_item_index\">{{$index+1}}</div>\n      {{include '" + answerItem + "' {data:$value} ''}}\n    </div>\n  {{/each}}\n{{else}}\n  <div class=\"talqs_panel_item\">\n    <div class=\"talqs_panel_item_content\">\n        {{if data.isCloze}}\n          {{data.answer | formatAnswer}}\n        {{else}}\n          {{#data.answer.join(' ')}}\n        {{/if}}\n    </div>\n  </div>\n{{/if}}\n");
+var questionAnswerItem = ("\n{{if data.childList}}\n  {{each data.childList}}\n    <div class=\"" + (style.analyzeItem) + "\">\n      <div class=\"" + (style.analyzeItemIndex) + "\">{{$index+1}}</div>\n      {{include '" + answerItem + "' {data:$value} ''}}\n    </div>\n  {{/each}}\n{{else}}\n  <div class=\"" + (style.panelItem) + "\">\n    <div class=\"" + (style.panelItemContent) + "\">\n        {{if data.isCloze}}\n          {{data.answer | formatAnswer}}\n        {{else}}\n          {{#data.answer.join(' ')}}\n        {{/if}}\n    </div>\n  </div>\n{{/if}}\n");
 
 /**
  * 试题解析组件
  */
 
-var questionAnalyze = ("\n<div class=\"" + stylePrefix + "_analyze " + clear + "\">\n  <label class=\"" + label + "\">\n    {{config.labels.analyze}}\n  </label>\n  <div class=\"" + panel + "\">\n    {{include '" + analyzeItem + "'}}\n  </div>\n</div>\n");
+var questionAnalyze = ("\n<div class=\"" + (style.analyze) + "  " + (style.clear) + "\">\n  <label class=\"" + (style.label) + "\">\n    {{config.labels.analyze}}\n  </label>\n  <div class=\"" + (style.panel) + "\">\n    {{include '" + analyzeItem + "'}}\n  </div>\n</div>\n");
 
-var questionAnalyzeItem = ("\n{{if data.childList}}\n  {{each data.childList}}\n    <div class=\"talqs_analyze_item\">\n      <div class=\"talqs_analyze_item_index\">{{$index+1}}</div>\n      {{include '" + analyzeItem + "' {data:$value} ''}}\n    </div>\n  {{/each}}\n{{else}}\n  <div class=\"talqs_panel_item\">\n    <div class=\"talqs_panel_item_content\">{{#data.analysis}}</div>\n  </div>\n{{/if}}\n");
+var questionAnalyzeItem = ("\n{{if data.childList}}\n  {{each data.childList}}\n    <div class=\"" + (style.analyzeItem) + "\">\n      <div class=\"" + (style.analyzeItemIndex) + "\">{{$index+1}}</div>\n      {{include '" + analyzeItem + "' {data:$value} ''}}\n    </div>\n  {{/each}}\n{{else}}\n  <div class=\"" + (style.panelItem) + "\">\n    <div class=\"{style.panelItemContent}\">{{#data.analysis}}</div>\n  </div>\n{{/if}}\n");
 
 /**
  * 试题知识点组件
  * 根据知识点生成一个树形结构
  */
 
-var questionKnowledgePoint = ("\n <div class=\"" + stylePrefix + "_knowledgePoint " + clear + "\">\n  <label class=\"" + label + "\">\n    {{config.labels.knowledgePoint}}\n  </label>\n  <div class=\"" + tree + "\">\n    <ul>\n      {{each data.examOptionList}}\n        {{include '" + knowledgePointItem + "' {data:$value} ''}}\n      {{/each}}\n    </ul>\n  </div>\n</div>\n");
+var questionKnowledgePoint = ("\n <div class=\"" + (style.knowledgePoint) + "  " + (style.clear) + "\">\n  <label class=\"" + (style.label) + "\">\n    {{config.labels.knowledgePoint}}\n  </label>\n  <div class=\"" + (style.tree) + "\">\n    <ul>\n      {{each data.examOptionList}}\n        {{include '" + knowledgePointItem + "' {data:$value} ''}}\n      {{/each}}\n    </ul>\n  </div>\n</div>\n");
 
 /**
  * 单个知识点列表组件，递归显示
@@ -1169,7 +1108,7 @@ var questionKnowledgePointItem = ("\n<li>\n  {{data.name}}\n  {{if data.childLis
  * 试题 ID 组件
  */
 
-var questionID = ("\n<div class=\"" + stylePrefix + "_id " + clear + "\">\n  <label class=\"" + label + "\">\n    {{config.labels.queId}}\n  </label>\n  <div class=\"" + panel + "\">\n    {{data.queId}}  \n  </div>\n</div>\n");
+var questionID = ("\n<div class=\"" + (style.id) + "  " + (style.clear) + "\">\n  <label class=\"" + (style.label) + "\">\n    {{config.labels.queId}}\n  </label>\n  <div class=\"" + (style.panel) + "\">\n    {{data.queId}}  \n  </div>\n</div>\n");
 
 /**
  * 导出所有需要注册的内置组件
@@ -1251,11 +1190,8 @@ TalqsTemplate.registerComponent = registerComponent;
 
 /**
  * [registerTemplate 注册一个模板]
- * @param  {[type]} destKey  [现有模板配置的名称，空则新添加一组]
  * @param  {[type]} key      [模板名称]
- * @param  {[type]} template [模板字符]
- * @param  {[type]} index    [需要插入的位置]
- * @return {[type]}          [description]
+ * @param  {[type]} list     [组件列表]
  */
 TalqsTemplate.registerTemplate = function (key, list) {
   TalqsTemplate.config.templates[key] = list;

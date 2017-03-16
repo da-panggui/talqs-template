@@ -5,14 +5,12 @@
  * 详情参看 config/template.js 
  */
 
-import { stylePrefix }from '../../config/style';
+import style from '../../config/style';
 
 import { stemsWrapper } from '../../config/template';
 
-const styleMain = `${stylePrefix}_main`;
-
 export default `
-<div class="${styleMain}">
+<div class="${style.stems}">
  {{each config.templates['${stemsWrapper}']}}
     {{include $value}}
  {{/each}}

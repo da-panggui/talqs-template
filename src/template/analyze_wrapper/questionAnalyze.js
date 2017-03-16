@@ -2,17 +2,17 @@
  * 试题解析组件
  */
 
-import { stylePrefix, label, panel, clear }from '../../config/style';
+import style from '../../config/style';
 
 import { analyzeItem } from '../../config/template';
 
 export default
     `
-<div class="${stylePrefix}_analyze ${clear}">
-  <label class="${label}">
+<div class="${style.analyze}  ${style.clear}">
+  <label class="${style.label}">
     {{config.labels.analyze}}
   </label>
-  <div class="${panel}">
+  <div class="${style.panel}">
     {{include '${analyzeItem}'}}
   </div>
 </div>

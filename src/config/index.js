@@ -8,11 +8,6 @@ import { question } from './template';
 
 const talqsTemplateConfig = {
   /**
-   * 交互版标示
-   */
-  interactive: false,
-
-  /**
    * 解析显示版本
    * 0: 不显示解析
    * 1: 大题显示（如果是复合题则拼装子题的解析显示）

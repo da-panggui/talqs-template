@@ -7,7 +7,7 @@
  * isSub:   子题标记
  */
 
-import { stylePrefix } from '../../config/style';
+import style from '../../config/style';
 
 import { stemsWrapper } from '../../config/template';
 
@@ -17,7 +17,7 @@ const childData = '{data:$value,config:config,index:$index+1,isSub:true}'
 export default 
 `
 {{ if data.childList }}
-  <div class="${stylePrefix}_subqs">
+  <div class="${style.subqs}">
     {{each data.childList}}
       {{include '${stemsWrapper}' ${childData} ''}}
     {{/each}}

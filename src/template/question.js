@@ -4,12 +4,12 @@
  * 详情参见 config/template.js
  */
 
-import { stylePrefix } from '../config/style';
+import style from '../config/style';
 
 import { question } from '../config/template';
 
 export default
-`<div class="${stylePrefix}">
+`<div class="${style.main}">
   {{ each config.templates['${question}'] }}
     {{include $value}}
   {{/each}}

@@ -2,15 +2,15 @@
  * 试题 ID 组件
  */
 
-import { stylePrefix, label, panel, clear }from '../../config/style';
+import style from '../../config/style';
 
 export default 
 `
-<div class="${stylePrefix}_id ${clear}">
-  <label class="${label}">
+<div class="${style.id}  ${style.clear}">
+  <label class="${style.label}">
     {{config.labels.queId}}
   </label>
-  <div class="${panel}">
+  <div class="${style.panel}">
     {{data.queId}}  
   </div>
 </div>
