@@ -1,5 +1,93 @@
 {  
-   "data":[  
+   "data":[
+      {
+            "queId":"ca4252737bbf45ff8161fb808da874d0",
+            "logicQuesTypeId":"4",
+            "logicQuesTypeName":"填空",
+            "content":"<p>计算：$$56.7\\times 23.4-567\\times 1.26-108\\times 4.67=$$&nbsp;<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>&nbsp;．</p>",
+            "answerOptionList":null,
+            "answer":[
+               "$$108$$"
+            ],
+            "analysis":"<p>原式$$=5.67\\times \\left( 234-126 \\right)-108\\times 4.67=5.67\\times 108-108\\times 4.67=108$$．</p>",
+            "examOptionList":[
+               {
+                  "id":"k2iialjruhi1ebq1wh8suc69i2tg0000",
+                  "name":"计算",
+                  "childList":[
+                     {
+                        "id":"k2iialjruhi1ebq1wh8suc69i2tg0001",
+                        "name":"速算与巧算",
+                        "childList":[
+                           {
+                              "id":"k2iialjruhi1ebq1wh8suc69i2tg0005",
+                              "name":"乘法分配律与提取公因数",
+                              "childList":[
+
+                              ]
+                           }
+                        ]
+                     }
+                  ]
+               },
+               {
+                  "id":"k2iialjruhi1ebq1wh8suc69i2tg0091",
+                  "name":"行程问题",
+                  "childList":[
+
+                  ]
+               },
+               {
+                  "id":"k2iialjruhi1ebq1wh8suc69i2tg00a8",
+                  "name":"杂题",
+                  "childList":[
+                     {
+                        "id":"k2iialjruhi1ebq1wh8suc69i2tg00a9",
+                        "name":"数列与数表",
+                        "childList":[
+
+                        ]
+                     },
+                     {
+                        "id":"k2iialjruhi1ebq1wh8suc69i2tg00ae",
+                        "name":"操作与策略",
+                        "childList":[
+
+                        ]
+                     },
+                     {
+                        "id":"k2iialjruhi1ebq1wh8suc69i2tg00b2",
+                        "name":"逻辑推理",
+                        "childList":[
+
+                        ]
+                     },
+                     {
+                        "id":"k2iialjruhi1ebq1wh8suc69i2tg00b6",
+                        "name":"智巧趣题",
+                        "childList":[
+
+                        ]
+                     },
+                     {
+                        "id":"k2iialjruhi1ebq1wh8suc69i2tg00b9",
+                        "name":"抽屉原理",
+                        "childList":[
+
+                        ]
+                     }
+                  ]
+               }
+            ],
+            "childList":[
+
+            ],
+            "difficulty":2,
+            "stuAnswerImg":"http://qiniu.haibian.com/stu/null",
+            "teaCorrImg":"http://qiniu.haibian.com/tea/null",
+            "teaCorrVoice":null,
+            "stuAnswer":"1536.84;zk;"
+      },
       {  
          "analysis":"<p>考查名词性物主代词。看be动词都是is，所以代词应该都是单数代词，所以选D。</p>",
          "answer":[  
