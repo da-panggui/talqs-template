@@ -12,7 +12,7 @@ export default
   {{/each}}
 {{else}}
   <div class="${style.panelItem}">
-    <div class="{style.panelItemContent}">{{#data.analysis}}</div>
+    <div class="${style.panelItemContent}">{{#data.analysis}}</div>
   </div>
 {{/if}}
 `

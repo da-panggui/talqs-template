@@ -1,6 +1,6 @@
 ## Intro
 
-Talqs is a lightweight JavaScript library to render aibeike question data to HTML string. It's easy to integrate with your application. 
+TalqsTemplate is a lightweight JavaScript library to render aibeike question data to HTML string. It's easy to integrate with your application. 
 
 [read more]( https://hejinjun.github.io/talqs-template/)
 
