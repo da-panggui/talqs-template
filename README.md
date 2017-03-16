@@ -10,10 +10,10 @@ Running the examples:
 
 ``` bash
 $ npm install
-$ npm run dev # serve examples at localhost:8080
+$ npm run dev # serve examples at localhost:2000
 ```
 
-[Basic usage] https://hejinjun.github.io/talqs-template/dist/demo/)
+[Basic usage](https://hejinjun.github.io/talqs-template/dist/demo/)
 
 ## Concat
  
