@@ -771,7 +771,6 @@ var components = {
     QueID: 'questionID',
 };
 
-
 var templateConfig = {};
 templateConfig[question] = [
       stemsWrapper,
