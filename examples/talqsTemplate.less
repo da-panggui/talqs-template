@@ -1,36 +1,37 @@
-//minix
-//子题添加小括号
-.talqs-index-parentheses() {
-    &:before {
-        content: '（'
-    }
-    &:after {
-        content: '）'
-    }
-}
-//子子题序号
-.talqs_index_type() {
-    background: transparent;
-    border-radius: 50%;
-    border: 1px solid #4d4d4d;
-    width: 1em;
-    height: 1em;
-    line-height: 1em;
-    margin-top: 8px;
-    text-align: center;
-}
-
-//清除浮动
-.clearfix::after{
-    display: block;
-    content: "";
-    clear: both;
-}
-
 .talqs {
     margin-bottom: 15px;
     font-size: 14px;
     line-height: 2.3em;
+    //子题添加小括号
+    .talqs-index-parentheses() {
+        &:before {
+            content: '（'
+        }
+        &:after {
+            content: '）'
+        }
+    }
+    //子子题序号
+    .talqs_index_type() {
+        background: transparent;
+        border-radius: 50%;
+        border: 1px solid #4d4d4d;
+        width: 1em;
+        height: 1em;
+        line-height: 1em;
+        margin-top: 8px;
+        text-align: center;
+    }
+
+    //清除浮动
+    .clearfix{
+        &:after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+    }
+
     //重置元素
     p {
         margin-bottom: 0;
@@ -63,6 +64,17 @@
     //试题内容（清除难度浮动）
     > .talqs_main > .talqs_content {
         clear: both;
+    }
+    //隐藏试题来源及试题难度
+    > .talqs_main > .talqs_index + .talqs_content {
+        clear: none;
+    }
+    //题干、答案、解析、知识点中表格内容过长
+    .talqs_content,
+    .talqs_panel,
+    .talqs_tree {
+        overflow: auto;
+        .clearfix;
     }
     // 选项样式
     .talqs_options {
@@ -102,6 +114,12 @@
         }
         .talqs_options_index + .talqs_options_columns_4{
             margin-left: 20px;
+            //移动端完形填空选项排列
+            @media (max-width: 576px) {
+                .talqs_options_columns_item {
+                    width: 50%;
+                }
+            }
         }
     }
     //解析
@@ -131,6 +149,7 @@
             margin-left: calc(~"3em + 10px");
             //控制长单词换行
             word-wrap: break-word;
+            padding-right: 10px;
         }
         //完型填空
         .talqs_panel > .talqs_panel_item {
