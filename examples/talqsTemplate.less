@@ -93,20 +93,30 @@
         //选项内容
         .talqs_options_content {
             margin-left: 20px;
+            margin-right: 10px;
+            p {
+                margin: 0;
+            }
         }
-        // 试题选项布局
+        // 试题选项外层布局
         .generate-option(8);
         .generate-option(@n, @i: 2) when (@i =< @n) {
-          .talqs_options_columns_@{i} {
-                .talqs_options_columns_item {
+          .talqs_options_list_@{i} {
+                .talqs_options_rows{
                     width: (100% / @i);
                     float: left;
-                    .talqs_options_content {
-                        margin-right: 10px;
-                        p {
-                            margin: 0;
-                        }
-                    }
+                    
+                }
+          }
+          .generate-option(@n, (@i + 1));
+        }
+        // 试题选项内部布局
+        .generate-option(4);
+        .generate-option(@n, @i: 2) when (@i =< @n) {
+          .talqs_options_columns_@{i} {
+                .talqs_options_columns_item{
+                    width: (100% / @i);
+                    float: left;
                 }
           }
           .generate-option(@n, (@i + 1));
