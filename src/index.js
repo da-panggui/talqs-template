@@ -105,4 +105,47 @@ TalqsTemplate.updateTemplateList = (key, list) => {
   TalqsTemplate.config.templates[key] = templates;
 }
 
+
+TalqsTemplate.autoLayout = (width, className) => {
+  const defaultName = '[data-auto-layout="1"]';
+  // 列表钩子名称，默认使用内置的类名
+  const hookName = className || defaultName;
+  // 获取需要布局的列表 DOM 集合
+  let autoLayoutList = document.querySelectorAll(hookName);
+  
+  if (autoLayoutList && autoLayoutList.length) {
+    autoLayoutList = Array.prototype.slice.apply(autoLayoutList);
+    // 遍历判断选项宽度，调整布局
+    autoLayoutList.forEach((item) => {
+      // 选项容器的宽度
+      const containerWidth = width || Math.floor(item.offsetWidth);
+      // 暂时调整容器的布局方式，以获取选项的最大宽度
+      item.style.display = 'inline-block';
+      // 选项个数
+      const childLen = item.children.length;
+      // 获取inline-block布局下最大的宽度. 自身宽度 + padding-right 10px
+      const maxItemWidth = Math.ceil(item.offsetWidth + 10);
+      // 默认最佳布局模式
+      let bestAxis = 1;
+      if (maxItemWidth) {
+        const maxLen = Math.floor(containerWidth / maxItemWidth);
+        if (childLen <= maxLen) { // 子选项少于理论上能摆放的个数
+          bestAxis = childLen;
+        } else { // 折行显示情况判断
+          if (maxItemWidth >= containerWidth / 2) { // 选项宽度大于等于总宽度的一半
+            bestAxis = 1;
+          } else if (maxItemWidth >= containerWidth / 4) { // 大于等于 1/4
+            bestAxis = 2;
+          } else { // 其他情况一律四行显示
+            bestAxis = 4;
+          }
+        }
+      }
+      item.classList.add(`talqs_options_list_${bestAxis}`);
+      // 重置display样式
+      item.style.display = '';
+    });
+  }
+}
+
 export default TalqsTemplate;

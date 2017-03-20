@@ -25,9 +25,9 @@ import style from '../../config/style';
 
 export default
 `
-{{ if data.answerOptionList }}
+{{ if data.answerOptionList && data.answerOptionList.length }}
   <div class="${style.options}">
-    <ul class="${style.optionsList}">
+    <ul class="${style.optionsList}" data-auto-layout="{{data.answerOptionList[0].length}}">
       {{each data.answerOptionList }}
         <li class="${style.optionsRows}">
           {{if data.isCloze }}

@@ -18,6 +18,7 @@ var renderIndex = function() {
   var currentData = data[currentIndex];
   app.innerHTML = TalqsTemplate.render(currentData);
   info.innerHTML = `逻辑类型： ${currentData.logicQuesTypeName}，逻辑类型ID： ${currentData.logicQuesTypeId}`;
+  TalqsTemplate.autoLayout();
 };
 
 // 切换下一道题
