@@ -73,43 +73,54 @@ const registerComponent = (components) => {
 
 registerComponent(cacheStore)
 
-TalqsTemplate.registerComponent = registerComponent;
 
 /**
- * [registerTemplate 注册一个模板]
- * @param  {[type]} key      [模板名称]
- * @param  {[type]} list     [组件列表]
+ * [description]
+ * @param  {[type]} data [description]
+ * @return {[type]}      [description]
  */
-TalqsTemplate.registerTemplate = (key, list) => {
-  TalqsTemplate.config.templates[key] = list;
-}
-
-TalqsTemplate.updateTemplateList = (key, list) => {
-  let templates = TalqsTemplate.config.templates[key] || [];
-  let tempIndex;
-  let tempComponent;
-  list.forEach((item, index) => {
-    tempComponent = item.component;
-    if (tempComponent) {
-      tempIndex = templates.indexOf(tempComponent);
-      if (item.remove && tempIndex >= 0) {
-        templates.splice(tempIndex, 1);
-      }
-
-      if (tempIndex < 0 && !item.remove) {
-        tempIndex = (item.index !== undefined && item.index < templates.length) ? item.index : templates.length;
-        templates.splice(tempIndex, 0, tempComponent);
-      }
+const updateTemplateList = (data) => {
+  const templates = TalqsTemplate.config.templates;
+  for (let key in data) {
+    const item = data[key];
+    let templateList = templates[key] || [];
+    // 移除模板中不需要的组件
+    if (item.exclude && item.exclude.length && templateList.length) {
+      templateList = templateList.filter((sub) => item.exclude.indexOf(sub) === -1)
     }
-  })
-  TalqsTemplate.config.templates[key] = templates;
+    // 添加新定义的组件或者覆盖内置组件
+    if (item.components && item.components.length) {
+      let name;
+      let index;
+      let componentList = {};
+      item.components.forEach((component) => {
+        name = component.name;
+        index = templateList.indexOf(name);
+        if (index < 0) { // 新添加的组件
+          const targetIndex = isNaN(component.index) ? templateList.length : component.index;
+          templateList.splice(targetIndex, 0, name);
+        } else { // 覆盖内置组件
+          templateList.splice(component.index, 0, name);
+          templateList.splice(index, 1);
+        }
+        componentList[name] = component.template;
+      })
+      TalqsTemplate.config.templates[key] = templateList.filter((key) => typeof key === 'string');
+      registerComponent(componentList);
+    }
+  }
 }
 
+TalqsTemplate.updateTemplateList = updateTemplateList;
 
-TalqsTemplate.autoLayout = (width, className) => {
-  const defaultName = '[data-auto-layout="1"]';
+/**
+ * 试题选项自动布局
+ * @param  {[Number]} width     [布局宽度，默认为选项容器的宽度]
+ * @param  {[String]} hook      [布局的 DOM 钩子，默认布局 data-auto-layout="1" 的列表]
+ */
+TalqsTemplate.autoLayout = (width, hook) => {
   // 列表钩子名称，默认使用内置的类名
-  const hookName = className || defaultName;
+  const hookName = hook || TalqsTemplate.config.autoLayoutHook;
   // 获取需要布局的列表 DOM 集合
   let autoLayoutList = document.querySelectorAll(hookName);
   
@@ -141,7 +152,7 @@ TalqsTemplate.autoLayout = (width, className) => {
           }
         }
       }
-      item.classList.add(`talqs_options_list_${bestAxis}`);
+      item.classList.add(`${TalqsTemplate.config.layoutClassName}_${bestAxis}`);
       // 重置display样式
       item.style.display = '';
     });

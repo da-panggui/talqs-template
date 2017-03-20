@@ -1,6 +1,7 @@
 import templates from './template'
 import labels from './label'
 import { question } from './template';
+import style from './style';
 
 /**
  * talqsTemplateConfig 模板默认渲染配置
@@ -44,6 +45,19 @@ const talqsTemplateConfig = {
    * 默认渲染入口模板名称
    */
   entryTemplate: question,
+
+  /**
+   * 默认自动布局选项 DOM 钩子
+   */
+  autoLayoutHook: '[data-auto-layout="1"]',
+
+  /**
+   * 自动布局添加样式
+   * eg: ${layoutClassName}_1
+   *     ${layoutClassName}_2
+   *     ${layoutClassName}_4
+   */
+  layoutClassName: style.optionsList,
 }
 
 

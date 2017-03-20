@@ -19,6 +19,8 @@
  * 试题的 isCloze 标记是否是完型填空，完型填空需要在选项前添加对应的题号（行号）
  * 1. A.XXX B.XXX C.XXX D.XXX
  * n. A.XXX B.XXX C.XXX D.XXX
+ *
+ * data-auto-layout="1" : 试题选项自动布局的钩子
  */
 
 import style from '../../config/style';
@@ -28,9 +30,9 @@ export default
 {{ if data.answerOptionList && data.answerOptionList.length }}
   <div class="${style.options}">
     <ul class="${style.optionsList}" data-auto-layout="{{data.answerOptionList[0].length}}">
-      {{each data.answerOptionList }}
+      {{each data.answerOptionList}}
         <li class="${style.optionsRows}">
-          {{if data.isCloze }}
+          {{if data.isCloze}}
             <span class="${style.optionsIndex}">{{$index+1}}. </span>
           {{/if}}
           <ul class="${style.optionsColumns}_{{$value.length}} ${style.clear}">
