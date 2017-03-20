@@ -101,25 +101,22 @@
         // 试题选项外层布局
         .generate-option(8);
         .generate-option(@n, @i: 2) when (@i =< @n) {
-          .talqs_options_list_@{i} {
+            //父级ul
+            .talqs_options_list_@{i} {
                 .talqs_options_rows{
                     width: (100% / @i);
                     float: left;
                     
                 }
-          }
-          .generate-option(@n, (@i + 1));
-        }
-        // 试题选项内部布局
-        .generate-option(4);
-        .generate-option(@n, @i: 2) when (@i =< @n) {
-          .talqs_options_columns_@{i} {
+            }
+            //子级ul（2和4两种情况）
+            .talqs_options_columns_@{i} when (@i = 2), (@i = 4) {
                 .talqs_options_columns_item{
                     width: (100% / @i);
                     float: left;
                 }
-          }
-          .generate-option(@n, (@i + 1));
+            }
+            .generate-option(@n, (@i + 1));   
         }
         //完形填空
         .talqs_options_index {
