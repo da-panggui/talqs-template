@@ -110,9 +110,10 @@ const updateTemplateList = (data) => {
         }
         componentList[name] = component.template;
       })
-      TalqsTemplate.config.templates[key] = templateList.filter((key) => typeof key === 'string');
       registerComponent(componentList);
     }
+    // 模板重新赋值
+    TalqsTemplate.config.templates[key] = templateList.filter((key) => typeof key === 'string');
   }
 }
 

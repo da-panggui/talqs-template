@@ -33,7 +33,7 @@ var talComponents = TalqsTemplate.components;
 
 TalqsTemplate.updateTemplateList({
     [talComponents.AnalyzeWrapper]: {
-        exclude: [talComponents.QueID], // 移除
+        exclude: [talComponents.QueID,talComponents.KnowledgePoint], // 移除
         components: [{ // 添加到末尾
             name: 'questionLabel',
             template: document.getElementById('questionLabel').innerHTML,
