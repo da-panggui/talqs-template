@@ -5,7 +5,7 @@
 
 import style from '../../config/style';
 
-import { knowledgePointItem } from '../../config/template';
+import { components } from '../../config/template';
 
 export default
 `
@@ -16,7 +16,7 @@ export default
   <div class="${style.tree}">
     <ul>
       {{each data.examOptionList}}
-        {{include '${knowledgePointItem}' {data:$value} ''}}
+        {{include '${components.KnowledgePointItem}' {data:$value} ''}}
       {{/each}}
     </ul>
   </div>

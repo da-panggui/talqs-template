@@ -19,37 +19,37 @@
   `fn`      helper 定义
 
 
-- **`registerComponent(components: Object)`**
+- **`updateTemplateList(data)`**
 
-  添加组件
+  更新模板
 
-  `components` 组件对象
+  `data`   模板配置信息
 
-  `key`: 组件名称
+      {
+        '模板组件名称': {
+          components: [
+            {
+              name: '新添加的子组件名称',
+              template: '新添加子组件的模板字符串',
+              index: '新添加子组件的显示位置，默认放到最后显示'
+            },
+            {
+              name: '覆盖内置组件的名称',
+              template: '覆盖内置组件的模板字符串',
+              index: '覆盖内置组件新的显示位置，默认直接在原位置覆盖'
+            },
+            ...
+          ],
+          exclude: [] // 移除的子组件
+        }
+      }
 
-  `value`: 组件模板字符串
+- **`autoLayout(width: Number)`**
 
-- **`registerTemplate(key: String, list: Array)`**
+  选择题自动布局
 
-  添加结构模板
+  `width`  容器宽度
 
-  `key`    模板名称
-
-  `list`   内嵌组件列表
-
-
-<!-- - **`updateTemplateList(key: String, list: Array)`**
-
-  添加结构模板
-
-  `key`    模板名称
-
-  `list`   内嵌组件列表 -->
-
-
-<!-- - **`resetComponent(keys)`**
-
-  重置内置组件模板 -->
 
   
 ### TalqsTemplate 属性

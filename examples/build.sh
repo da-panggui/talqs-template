@@ -9,7 +9,7 @@ lessc ./talqsTemplate.less $dist/talqsTemplate.css
 # lessc --clean-css="advanced" ./talqsTemplate.less $dist/talqsTemplate.min.css
 
 # 拷贝静态资源
-cp ./index.html ./data.json ./talqsTemplate.less $demo
+cp ./index.html ./data.json ./talqsTemplate.less ./common.css $demo
 
 # 拷贝 demo 静态文件
 for f in **/index.html; do

@@ -6,11 +6,12 @@
 
 import style from '../config/style';
 
-import { question } from '../config/template';
+import { components } from '../config/template';
+
 
 export default
 `<div class="${style.main}">
-  {{ each config.templates['${question}'] }}
+  {{ each config.templates['${components.Question}'] }}
     {{include $value}}
   {{/each}}
 </div>

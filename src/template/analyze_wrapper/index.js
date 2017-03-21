@@ -4,13 +4,13 @@
 
 import style from '../../config/style';
 
-import { analyzeWrapper } from '../../config/template';
+import { components } from '../../config/template';
 
 export default
 `
   {{if config.analyzeVersion === 2}}
      <div class="${style.analyzeGroup}">
-      {{ each config.templates['${analyzeWrapper}'] }}
+      {{ each config.templates['${components.AnalyzeWrapper}'] }}
         {{include $value}}
       {{/each}}
     </div>

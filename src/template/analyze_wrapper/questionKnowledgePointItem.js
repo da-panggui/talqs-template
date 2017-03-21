@@ -2,7 +2,7 @@
  * 单个知识点列表组件，递归显示
  */
 
-import { knowledgePointItem } from '../../config/template';
+import { components } from '../../config/template';
 
 export default 
 `
@@ -11,7 +11,7 @@ export default
   {{if data.childList}}
     <ul>
       {{each data.childList}}
-        {{include '${knowledgePointItem}' {data:$value} ''}}
+        {{include '${components.KnowledgePointItem}' {data:$value} ''}}
       {{/each}}
     </ul>
   {{/if}}

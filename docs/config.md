@@ -48,8 +48,20 @@
 
     试题题号，默认为 0
 
-- **interactive**
+- **autoLayoutHook**
 
-  - 类型: `Boolean`
+  - 类型: `String`
 
-    交互版本标示，默认为 `false`
+    选择题容器的自动布局的 CSS 钩子，默认为 `[data-auto-layout="1"]`
+
+- **layoutClassName**
+
+  - 类型: `String`
+
+    自动布局添加类名配置，默认为 `'talqs_options_list'`。
+
+    自动布局完成后会在选项容器添加对应的类，例如：
+
+    `talqs_options_list_2` // 一行两个
+
+    `talqs_options_list_4` // 一行四个

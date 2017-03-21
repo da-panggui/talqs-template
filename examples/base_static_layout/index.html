@@ -2,16 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Base Static</title>
+  <title>Base Static Layout</title>
   <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet/less" type="text/css" href="../talqsTemplate.less" />
-  <link rel="stylesheet" type="text/css" href="../common.css" />
   <script src="https://cdn.bootcss.com/less.js/2.7.2/less.js"></script>
+  <link rel="stylesheet" type="text/css" href="../common.css" />
 </head>
 <body>
-  <div class="container">
+  <div class="container" style="padding-left: 50px">
     <div class="row">
-      <p class="text-info">该 Demo 展示了使用 TalqsTemplate 渲染试题结构</p>
+      <p class="text-info">该 Demo 展示了使用 TalqsTemplate 对选择题选项进行自适应布局</p>
+      <p class="text-info">注意： 自动布局只对没有人工干预布局的单选，多选题有效，对完型填空没有影响</p>
+      <p class="text-danger">注意： 自动布局需要在试题渲染完成并添加到 DOM 后调用才有效</p>
+      <pre><code>TalqsTemplate.autoLayout();</code></pre>
     </div>
     <div class="row">
       <button type="submit" class="btn btn-primary" id="changeQS">下一题</button>
@@ -30,14 +33,14 @@
   // 试题数据请求完成
   var loadComplete = function(result) {
     data = result;
-    renderQS()
+    renderIndex()
   };
 
   var app = document.getElementById('app');
   var info = document.getElementById('info');
 
   // 渲染试题
-  var renderQS = function() {
+  var renderIndex = function() {
     var currentData = data[currentIndex];
     app.innerHTML = TalqsTemplate.render(currentData);
     info.innerHTML = `逻辑类型： ${currentData.logicQuesTypeName}，逻辑类型ID： ${currentData.logicQuesTypeId}`;
@@ -48,7 +51,7 @@
   // 切换下一道题
   document.getElementById('changeQS').addEventListener('click', function(){
     currentIndex = currentIndex < data.length - 1 ? currentIndex + 1 : 0;
-    renderQS()
+    renderIndex()
   })
 
   // 请求试题数据
@@ -64,6 +67,6 @@
 </pre>
 </div>
   <script src="../build/shared.js"></script>
-  <script src="../build/base_static.js"></script>
+  <script src="../build/base_static_layout.js"></script>
 </body>
 </html>

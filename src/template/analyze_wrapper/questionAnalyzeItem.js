@@ -1,4 +1,4 @@
-import { analyzeItem } from '../../config/template';
+import { components } from '../../config/template';
 import style from '../../config/style';
 
 export default
@@ -7,7 +7,7 @@ export default
   {{each data.childList}}
     <div class="${style.analyzeItem}">
       <div class="${style.analyzeItemIndex}">{{$index+1}}</div>
-      {{include '${analyzeItem}' {data:$value} ''}}
+      {{include '${components.AnalyzeItem}' {data:$value} ''}}
     </div>
   {{/each}}
 {{else}}

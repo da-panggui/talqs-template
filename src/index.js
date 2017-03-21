@@ -12,6 +12,10 @@ const TalqsTemplate = {
   version: '__VERSION__',
   // 插件默认配置对象
   config: defaultConfig,
+
+  get components() {
+    return this.config.components;
+  }
 }
 
 
@@ -36,7 +40,7 @@ TalqsTemplate.render = (data, config) => {
   TalqsTemplate.config = config;
 
   // 编译模板
-  const render = artTemplate.cache[config.entryTemplate]
+  const render = artTemplate.cache[config.entryTemplate];
   // 填充数据
   const html = render({config, data, index: config.queIndex });
   // 返回渲染完成的 HTML 字符串
@@ -75,9 +79,8 @@ registerComponent(cacheStore)
 
 
 /**
- * [description]
+ * 更新模板构成
  * @param  {[type]} data [description]
- * @return {[type]}      [description]
  */
 const updateTemplateList = (data) => {
   const templates = TalqsTemplate.config.templates;
@@ -100,8 +103,10 @@ const updateTemplateList = (data) => {
           const targetIndex = isNaN(component.index) ? templateList.length : component.index;
           templateList.splice(targetIndex, 0, name);
         } else { // 覆盖内置组件
-          templateList.splice(component.index, 0, name);
-          templateList.splice(index, 1);
+          if (!isNaN(component.index)) {
+            templateList.splice(index, 1);
+            templateList.splice(component.index, 0, name);
+          }
         }
         componentList[name] = component.template;
       })
@@ -116,11 +121,10 @@ TalqsTemplate.updateTemplateList = updateTemplateList;
 /**
  * 试题选项自动布局
  * @param  {[Number]} width     [布局宽度，默认为选项容器的宽度]
- * @param  {[String]} hook      [布局的 DOM 钩子，默认布局 data-auto-layout="1" 的列表]
  */
-TalqsTemplate.autoLayout = (width, hook) => {
+TalqsTemplate.autoLayout = (width) => {
   // 列表钩子名称，默认使用内置的类名
-  const hookName = hook || TalqsTemplate.config.autoLayoutHook;
+  const hookName = TalqsTemplate.config.autoLayoutHook;
   // 获取需要布局的列表 DOM 集合
   let autoLayoutList = document.querySelectorAll(hookName);
   

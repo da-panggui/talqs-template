@@ -9,7 +9,7 @@
 
 import style from '../../config/style';
 
-import { stemsWrapper } from '../../config/template';
+import { components } from '../../config/template';
 
 // 子题数据
 const childData = '{data:$value,config:config,index:$index+1,isSub:true}'
@@ -19,7 +19,7 @@ export default
 {{ if data.childList }}
   <div class="${style.subqs}">
     {{each data.childList}}
-      {{include '${stemsWrapper}' ${childData} ''}}
+      {{include '${components.StemsWrapper}' ${childData} ''}}
     {{/each}}
   </div>
 {{/if}}

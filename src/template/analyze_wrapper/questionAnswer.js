@@ -4,7 +4,7 @@
 
 import style from '../../config/style';
 
-import { answerItem } from '../../config/template';
+import { components } from '../../config/template';
 
 export default
 `
@@ -13,7 +13,7 @@ export default
     {{config.labels.answer}}
   </label>
   <div class="${style.panel}">
-    {{include '${answerItem}'}}
+    {{include '${components.AnswerItem}'}}
   </div>
 </div>
 `

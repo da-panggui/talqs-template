@@ -28,3 +28,8 @@ var questionHTMLString = TalqsTemplate.render({question, options});
 var app = document.getElementById('app');
 app.innerHTML = questionHTMLString;
 ```
+
+## 4. 选择题自适应布局
+```js
+TalqsTemplate.autoLayout()
+```

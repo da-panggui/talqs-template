@@ -6,6 +6,5 @@
 - 配置
   - [常规配置](config.md)
   - [模板结构配置](template.md)
-  - [文字配置](label.md)
-- [FAQ](faq.md)
+  <!-- - [文字配置](label.md) -->
 - [API 文档](api.md)

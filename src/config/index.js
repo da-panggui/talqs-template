@@ -1,6 +1,6 @@
 import templates from './template'
 import labels from './label'
-import { question } from './template';
+import { components } from './template';
 import style from './style';
 
 /**
@@ -44,7 +44,7 @@ const talqsTemplateConfig = {
   /**
    * 默认渲染入口模板名称
    */
-  entryTemplate: question,
+  entryTemplate: components.Question,
 
   /**
    * 默认自动布局选项 DOM 钩子
@@ -58,6 +58,8 @@ const talqsTemplateConfig = {
    *     ${layoutClassName}_4
    */
   layoutClassName: style.optionsList,
+
+  components,
 }
 
 

@@ -7,11 +7,11 @@
 
 import style from '../../config/style';
 
-import { stemsWrapper } from '../../config/template';
+import { components } from '../../config/template';
 
 export default `
 <div class="${style.stems}">
- {{each config.templates['${stemsWrapper}']}}
+ {{each config.templates['${components.StemsWrapper}']}}
     {{include $value}}
  {{/each}}
 </div>

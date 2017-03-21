@@ -1,5 +1,4 @@
 import TalqsTemplate from 'talqsTemplate';
-var escapeHtml = require('escape-html');
 
 var data = [];
 var currentIndex = 0;
@@ -7,13 +6,13 @@ var currentIndex = 0;
 // 试题收请求完成
 var loadComplete = function(result) {
   data = result;
-  renderIndex()
+  renderQS()
 };
 
 var app = document.getElementById('app');
-var changeQSBtn =  document.getElementById('changeQS');
 var info = document.getElementById('info');
 
+// 注册 helper
 TalqsTemplate.registerHelper('formatDifficulty', function(difficulty, template) {
   difficulty = parseInt(difficulty, 10) || 0
   let output = ''
@@ -23,21 +22,41 @@ TalqsTemplate.registerHelper('formatDifficulty', function(difficulty, template) 
   return output
 })
 
-var questionDifficultyNode = document.getElementById('questionDifficulty');
-document.getElementById('template').innerHTML = escapeHtml(questionDifficultyNode.outerHTML);
-TalqsTemplate.registerComponent({questionDifficulty: questionDifficultyNode.innerHTML})
+// 试题难度组件模板
+var questionDifficulty = `
+{{if !isSub && !config.hideDifficulty}}
+  <div class="talqs_difficulty clearfix">
+    {{#data.difficulty | formatDifficulty:'<span>&#9829;</span>'}}
+  </div>
+{{/if}}
+`
+
+// 内置组件列表
+var talComponents = TalqsTemplate.components;
+
+// 覆盖内置组件
+TalqsTemplate.updateTemplateList({
+  [talComponents.StemsWrapper]: {
+    components: [{
+      name: talComponents.Difficulty,
+      template: questionDifficulty,
+    }]
+  }
+});
 
 // 渲染试题
-var renderIndex = function() {
+var renderQS = function() {
   var currentData = data[currentIndex];
-  app.innerHTML = TalqsTemplate.render(currentData, {queIndex: currentIndex + 1});
+  app.innerHTML = TalqsTemplate.render(currentData, {
+    queIndex: currentIndex + 1
+  });
   info.innerHTML = `逻辑类型： ${currentData.logicQuesTypeName}，逻辑类型ID： ${currentData.logicQuesTypeId}`;
 };
 
 // 切换下一道题
-changeQSBtn.addEventListener('click', function(){
+document.getElementById('changeQS').addEventListener('click', function(){
   currentIndex = currentIndex < data.length - 1 ? currentIndex + 1 : 0;
-  renderIndex()
+  renderQS()
 })
 
 // 请求试题数据
