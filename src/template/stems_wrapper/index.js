@@ -10,7 +10,7 @@ import style from '../../config/style';
 import { components } from '../../config/template';
 
 export default `
-<div class="${style.stems}">
+<div class="${style.stems} ${style.clear}">
  {{each config.templates['${components.StemsWrapper}']}}
     {{include $value}}
  {{/each}}
