@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Base Static Index</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet/less" type="text/css" href="../talqsTemplate.less" />
+    <script src="https://cdn.bootcss.com/less.js/2.7.2/less.js"></script>
+    <link rel="stylesheet" type="text/css" href="../common.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <p class="text-info">
+                该 Demo 展示了如何向 TalqsTemplate 注册 helper, 关于 helper 可以参考 <a href="https://github.com/aui/artTemplate" target="_blank">artTemplate helper</a>
+            </p>
+            <p class="text-info"><code>formatDifficulty</code> 为一个新添加的 helper，它允许在渲染试题难度时调用 helper 进行逻辑处理</p>
+            <p class="text-info">注册 helper 需要调用 TalqsTemplate 的 <code>registerHelper</code>方法.</p>
+            <p class="text-info">在 helper 中我们定义接受遍历的模板，再遍历试题难度进行模板拼接 </p>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-primary" id="changeQS">下一题</button>
+        </div>
+        <div class="row" id="info"></div>
+        <div id="app" class="row"></div>
+    </div>
+    <div class="container">
+        <pre><code>
+import TalqsTemplate from 'talqsTemplate';
+
+var data = [];
+var currentIndex = 0;
+
+// 试题收请求完成
+var loadComplete = function(result) {
+  data = result;
+  renderQS()
+};
+
+var app = document.getElementById('app');
+var info = document.getElementById('info');
+
+// 注册 helper
+TalqsTemplate.registerHelper('formatDifficulty', function(difficulty, template) {
+  difficulty = parseInt(difficulty, 10) || 0
+  let output = ''
+  for (let i = 0; i < difficulty; i++) {
+      output += template
+  }
+  return output
+})
+
+// 试题难度组件模板
+var questionDifficulty = `
+{{if !isSub && !config.hideDifficulty}}
+  <div class="talqs_difficulty clearfix">
+    {{#data.difficulty | formatDifficulty:'<span>&#9829;</span>'}}
+  </div>
+{{/if}}
+`
+
+// 内置组件列表
+var talComponents = TalqsTemplate.components;
+
+// 覆盖内置组件
+TalqsTemplate.updateTemplateList({
+  [talComponents.StemsWrapper]: {
+    components: [{
+      name: talComponents.Difficulty,
+      template: questionDifficulty
+    }]
+  }
+});
+
+// 渲染试题
+var renderQS = function() {
+  var currentData = data[currentIndex];
+  app.innerHTML = TalqsTemplate.render(currentData, {
+    queIndex: currentIndex + 1
+  });
+  info.innerHTML = `逻辑类型： ${currentData.logicQuesTypeName}，逻辑类型ID： ${currentData.logicQuesTypeId}`;
+};
+
+// 切换下一道题
+document.getElementById('changeQS').addEventListener('click', function(){
+  currentIndex = currentIndex < data.length - 1 ? currentIndex + 1 : 0;
+  renderQS()
+})
+
+// 请求试题数据
+;(function(cb) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '../data.json');
+  xhr.send();
+  xhr.onload = function() {
+    cb(JSON.parse(this.responseText).data)
+  }
+})(loadComplete)     
+        </code></pre>
+    </div>
+    <script src="../build/shared.js"></script>
+    <script src="../build/base_static_helper.js"></script>
+</body>
+
+</html>

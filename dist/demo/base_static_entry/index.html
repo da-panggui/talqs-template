@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Base Static Entry</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet/less" type="text/css" href="../talqsTemplate.less" />
+    <script src="https://cdn.bootcss.com/less.js/2.7.2/less.js"></script>
+    <link rel="stylesheet" type="text/css" href="../common.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <p class="text-info">该 Demo 展示了如何使用 TalqsTemplate 配置对象的 <code>entryTemplate</code> 字段来渲染指定的入口模板结构</p>
+            <p class="text-info">在 TalqsTemplate 中默认渲染的是 <code>components.Question</code> 组件模板，该模板作为入口模板包含完整的试题结构，包括试题题干 + 解析，关于结构请参阅<a href="https://hejinjun.github.io/talqs-template/template.html" target="_blank">文档</a></p>
+            <p class="text-info">当插件内置模板不能满足需求时可以自定义模板并且将其设置为 <code>entryTemplate</code>， 或者通过修改 <code>entryTemplate</code>来渲染特定的模板</p>
+            <p class="text-info">在下面的 DEMO 中我们将试题的解析容器 <code>components.AnalyzeWrapper</code>作为入口模板进行渲染，注意同是需要配置 <code>analyzeVersion</code>为 2，才可以看到试题的解析</p>
+            <p class="text-info"><pre><code>TalqsTemplate.render(currentData, {
+  queIndex: currentIndex + 1, // 试题题号
+  analyzeVersion: 2, // 解析显示版本
+  entryTemplate: TalqsTemplate.components.AnalyzeWrapper // 入口组件
+});</code></pre></p>
+            <p class="text-info">请参考下面的呈现效果：</p>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-primary" id="changeQS">下一题</button>
+        </div>
+        <div class="row" id="info"></div>
+        <div id="app" class="row talqs"></div>
+    </div>
+    <div class="container">
+        <pre><code>
+import TalqsTemplate from 'talqsTemplate';
+
+var data = [];
+var currentIndex = 0;
+
+// 试题数据请求完成
+var loadComplete = function(result) {
+  data = result;
+  renderQS()
+};
+
+var app = document.getElementById('app');
+var info = document.getElementById('info');
+
+// 渲染试题
+var renderQS = function() {
+  var currentData = data[currentIndex];
+  app.innerHTML = TalqsTemplate.render(currentData, {
+    queIndex: currentIndex + 1, // 试题题号
+    analyzeVersion: 2, // 解析显示版本
+    entryTemplate: TalqsTemplate.components.AnalyzeWrapper // 入口组件
+  });
+  info.innerHTML = `逻辑类型： ${currentData.logicQuesTypeName}，逻辑类型ID： ${currentData.logicQuesTypeId}`;
+};
+
+// 切换下一道题
+document.getElementById('changeQS').addEventListener('click', function(){
+  currentIndex = currentIndex < data.length - 1 ? currentIndex + 1 : 0;
+  renderQS()
+})
+
+// 请求试题数据
+;(function(cb) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '../data.json');
+  xhr.send();
+  xhr.onload = function() {
+    cb(JSON.parse(this.responseText).data)
+  }
+})(loadComplete)
+    </code></pre>
+    </div>
+    <script src="../build/shared.js"></script>
+    <script src="../build/base_static_entry.js"></script>
+</body>
+
+</html>

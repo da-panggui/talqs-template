@@ -1,0 +1,276 @@
+.talqs {
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 2.3em;
+    //子题添加小括号
+    .talqs-index-parentheses() {
+        &:before {
+            content: '（'
+        }
+        &:after {
+            content: '）'
+        }
+    }
+    //子子题序号
+    .talqs_index_type() {
+        background: transparent;
+        border-radius: 50%;
+        border: 1px solid #4d4d4d;
+        width: 1em;
+        height: 1em;
+        line-height: 1em;
+        margin-top: 8px;
+        text-align: center;
+    }
+
+    //清除浮动
+    .clearfix{
+        &:after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+    }
+
+    //重置元素
+    p {
+        margin-bottom: 0;
+    }
+    label {
+        margin-bottom: 0;
+        font-weight: 500;
+    }
+    //img按比例压缩
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    // 试题题号
+    .talqs_index {
+        float: left;
+        margin-right: 10px;
+    }
+    // 试题来源
+    .talqs_source {
+        float: left;
+        padding-right: 10px;
+        font-weight: 700;
+    }
+    // 试题难度
+    .talqs_difficulty {
+        color: #ff9500;
+        float: left;
+    }
+    //试题内容（清除难度浮动）
+    > .talqs_main > .talqs_content {
+        clear: both;
+    }
+    //隐藏试题来源及试题难度
+    > .talqs_main > .talqs_index + .talqs_content {
+        clear: none;
+    }
+    //题干、答案、解析、知识点中表格内容过长
+    .talqs_content,
+    .talqs_panel,
+    .talqs_tree {
+        overflow: auto;
+        .clearfix;
+    }
+    // 选项样式
+    .talqs_options {
+        clear: both;
+        // 重置选项下的列表样式
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        // 选项字母
+        .talqs_options_label {
+            float: left;
+            padding-right: 5px;
+        }
+        //选项内容
+        .talqs_options_content {
+            margin-left: 20px;
+            margin-right: 10px;
+            p {
+                margin: 0;
+            }
+        }
+        // 试题选项外层布局
+        .generate-option(8);
+        .generate-option(@n, @i: 2) when (@i =< @n) {
+            //父级ul
+            .talqs_options_list_@{i} {
+                .talqs_options_rows{
+                    width: (100% / @i);
+                    float: left;
+                    
+                }
+            }
+            //子级ul（2和4两种情况）
+            .talqs_options_columns_@{i} when (@i = 2), (@i = 4) {
+                .talqs_options_columns_item{
+                    width: (100% / @i);
+                    float: left;
+                }
+            }
+            .generate-option(@n, (@i + 1));   
+        }
+        //完形填空
+        .talqs_options_index {
+            width: 20px;
+            float: left;
+        }
+        .talqs_options_index + .talqs_options_columns_4{
+            margin-left: 20px;
+            //移动端完形填空选项排列
+            @media (max-width: 576px) {
+                .talqs_options_columns_item {
+                    width: 50%;
+                }
+            }
+        }
+    }
+    //解析
+    .talqs_analyzeGroup, 
+    .talqs_analyzeSingle {
+        margin-top: 10px;
+        padding: 10px 0;
+        background-color: #fafff5;
+        border: 1px solid #d6d6d6;
+        > div {
+            margin-bottom: 10px;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+        // 标签样式
+        .talqs_label {
+            background-color: #98bf6b;
+            color: #fff;
+            min-width: 3em;
+            padding: 0 2px;
+            text-align: center;
+            float: left;
+        }
+        //解析内容
+        .talqs_panel {
+            margin-left: calc(~"3em + 10px");
+            //控制长单词换行
+            word-wrap: break-word;
+            padding-right: 10px;
+        }
+        //完型填空
+        .talqs_panel > .talqs_panel_item {
+            float: left;
+            &:nth-child(5n) {
+                margin-right: 30px;
+            }
+        }
+    }
+    // 大题解析
+    .talqs_analyzeGroup {
+        .talqs_analyze_item {
+            // 子题题号
+            .talqs_analyze_item_index {
+                float: left;
+                margin-right: 5px;
+                .talqs-index-parentheses(); 
+            }
+            // 试题解析内容
+            .talqs_analyze_item_index {
+                margin-right: 0;
+            }
+            .talqs_panel_item,
+            .talqs_analyze_item {
+                margin-left: 3em;
+            }
+            .talqs_analyze_item .talqs_panel_item {
+                margin-left: 1.5em;
+            }
+            .talqs_analyze_item {
+                //子子题题号
+                .talqs_analyze_item_index {
+                    .talqs_index_type;
+                    &:before,
+                    &:after {
+                        content: "";
+                    }
+                }
+            }
+        }
+    }
+    // 子题
+    >.talqs_main >.talqs_subqs {
+        >.talqs_main {
+            //子题题号
+            >.talqs_index {
+                margin-right: 0;
+                .talqs-index-parentheses();
+            }
+            //子子题题号
+            .talqs_main >.talqs_index {
+                .talqs_index_type;
+            }
+            @media (min-width: 1200px) {
+                //子题内容、子题选项(移动端除外)
+                .talqs_content,
+                .talqs_options,
+                .talqs_subqs {
+                    margin-left: 3em;
+                }
+                //子子题内容
+                .talqs_subqs .talqs_content, 
+                .talqs_subqs .talqs_options {
+                    margin-left: 1.5em;
+                }
+            }
+        }
+    }
+    // 知识点树形结构样式
+    .talqs_tree {
+        ul {
+            list-style: none;
+            line-height: 30px;
+            list-style-type: none;
+            padding-left: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        li {
+            margin: 0;
+            padding: 0 12px;
+            position: relative;
+        }
+        li::before,
+        li::after {
+            content: '';
+            position: absolute;
+            left: 0;
+        }
+        /* horizontal line on inner list items */
+        li::before {
+            border-top: 1px solid #999;
+            top: 14px;
+            width: 11px;
+            height: 0;
+        }
+        /* vertical line on list items */
+        li:after {
+            border-left: 1px solid #999;
+            height: 100%;
+            width: 0px;
+            top: -15px;
+        }
+        /* lower line on list items from the first level because they don't have parents */
+        > li::after {
+            top: 14px;
+        }
+        /* hide line from the last of the first level list items */
+        > li:last-child::after {
+            display: none;
+        }
+    }
+}

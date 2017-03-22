@@ -1,0 +1,19 @@
+ html,
+ body {
+     height: 100%;
+ }
+ 
+ .row {
+     padding: 10px 0;
+ }
+ 
+ .container {
+     width: 50%;
+     float: left;
+     height: 100%;
+     overflow: scroll;
+ }
+ 
+ .container:nth-child(1) {
+     padding-left: 50px;
+ }

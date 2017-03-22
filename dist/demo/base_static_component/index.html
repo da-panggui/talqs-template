@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Base Static Component</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet/less" type="text/css" href="../talqsTemplate.less" />
+    <script src="https://cdn.bootcss.com/less.js/2.7.2/less.js"></script>
+    <link rel="stylesheet" type="text/css" href="../common.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <p class="text-info">该 Demo 展示了如何使用 TalqsTemplate 添加自定义组件</p>
+            <p class="text-info">TalqsTemplate 支持向内置组件列表中添加新的组件，也可以移除内置组件，同样也支持定义新的结构</p>
+            <p class="text-info">在 DEMO 中，我们添加了两个新的组件到解析容器中，分别为 <code>questionLabel</code> 和 <code>questionOrganization</code></p>
+            <p class="text-info">组件的模板可以在 js 文件中定义，也可以在 HTML 中定义，例如：</p>
+            <pre><code>
+&lt;script id="questionLabel" type="text/html"&gt;
+  &lt;div class="talqs_keyword clearfix"&gt;
+    &lt;label class="talqs_label"&gt;标签&lt;/label&gt;
+    &lt;div class="talqs_panel"&gt;
+        {{data.keyWord.split(';zk;').join(' ')}}
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/script&gt;
+            </code></pre>
+            <p class="text-info">
+              <pre><code>
+// 内置组件列表
+var talComponents = TalqsTemplate.components;
+
+TalqsTemplate.updateTemplateList({
+    [talComponents.AnalyzeWrapper]: {
+        exclude: [talComponents.QueID], // 移除试题 ID 组件
+        components: [{ // 添加试题标签到末尾
+            name: 'questionLabel',
+            template: document.getElementById('questionLabel').innerHTML,
+        }, { // 添加到指定位置，第 3 个呈现
+            name: 'questionOrganization',
+            template: questionOrganization,
+            index: 3
+        }, { // 覆盖内置的答案模板
+            name: talComponents.Answer,
+            template: questionAnswer,
+        }]
+    }
+})
+              </code></pre>
+            </p>
+            <p class="text-info">通过观察，可以发现：</p>
+            <p class="text-info">1. 试题 ID 组件不显示了</p>
+            <p class="text-info">2. 试题标签 和 试题机构 组件被添加到了容器中</p>
+            <p class="text-info">3. 试题机构 组件以第 4 个的顺序呈现</p>
+            <p class="text-info">4. 内置的答案组件被覆盖</p>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-primary" id="changeQS">下一题</button>
+        </div>
+        <div class="row" id="info"></div>
+        <div id="app" class="row"></div>
+    </div>
+    <script id="questionLabel" type="text/html">
+        <div class="talqs_keyword clearfix">
+            <label class="talqs_label">标签</label>
+            <div class="talqs_panel">
+                {{data.keyWord.split(';zk;').join(' ')}}
+            </div>
+        </div>
+    </script>
+    <div class="container">
+      <pre><code>
+import TalqsTemplate from 'talqsTemplate';
+
+var data = [];
+var currentIndex = 0;
+
+// 试题数据请求完成
+var loadComplete = function(result) {
+    data = result;
+    renderQS()
+};
+
+var app = document.getElementById('app');
+var info = document.getElementById('info');
+
+// 试题机构组件模板
+var questionOrganization = `
+  &lt;div class="talqs_organization clearfix"&gt;
+      &lt;label class="talqs_label"&gt;机构&lt;/label&gt;
+      &lt;div class="talqs_panel"&gt;{{data.systemName}}&lt;/div&gt;
+  &lt;/div&gt;
+`;
+
+// 试题答案组件模板
+var questionAnswer = `
+  &lt;div class="talqs_organization clearfix"&gt;
+      &lt;label class="talqs_label"&gt;答案&lt;/label&gt;
+      &lt;div class="talqs_panel"&gt;我是被覆盖的&lt;/div&gt;
+  &lt;/div&gt;
+`;
+
+// 内置组件列表
+var talComponents = TalqsTemplate.components;
+
+TalqsTemplate.updateTemplateList({
+    [talComponents.AnalyzeWrapper]: {
+        exclude: [talComponents.QueID], // 移除
+        components: [{ // 添加到末尾
+            name: 'questionLabel',
+            template: document.getElementById('questionLabel').innerHTML,
+        }, { // 添加到指定位置，第 4 个呈现
+            name: 'questionOrganization',
+            template: questionOrganization,
+            index: 3
+        }, { // 覆盖内置的答案模板
+            name: talComponents.Answer,
+            template: questionAnswer,
+        }]
+    }
+})
+
+// 渲染试题
+var renderQS = function() {
+    var currentData = data[currentIndex];
+    app.innerHTML = TalqsTemplate.render(currentData, { 
+      queIndex: currentIndex + 1, 
+      analyzeVersion: 2 
+    });
+    info.innerHTML = `逻辑类型： ${currentData.logicQuesTypeName}，逻辑类型ID： ${currentData.logicQuesTypeId}`;
+};
+
+// 切换下一道题
+document.getElementById('changeQS').addEventListener('click', function() {
+    currentIndex = currentIndex < data.length - 1 ? currentIndex + 1 : 0;
+    renderQS()
+})
+
+// 请求试题数据
+;
+(function(cb) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '../data.json');
+    xhr.send();
+    xhr.onload = function() {
+        cb(JSON.parse(this.responseText).data)
+    }
+})(loadComplete)
+      </code></pre>
+    </div>
+    <script src="../build/shared.js"></script>
+    <script src="../build/base_static_component.js"></script>
+</body>
+
+</html>
