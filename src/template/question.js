@@ -10,7 +10,7 @@ import { components } from '../config/template';
 
 
 export default
-`<div class="${style.main}">
+`<div class="${style.main}" data-root="{{data.queId}}">
   {{ each config.templates['${components.Question}'] }}
     {{include $value}}
   {{/each}}
